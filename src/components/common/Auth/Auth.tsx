@@ -1,4 +1,4 @@
-import { type FC, useState, useEffect, useCallback } from "react";
+import React, { type FC, useState, useEffect, useCallback } from "react";
 import {
   Button,
   Dialog,
@@ -131,7 +131,6 @@ const Auth: FC = () => {
           const accountInfo = await getAccount(data.email);
           useAuthStore.getState().setUserInfo(accountInfo.data);
           alert("登录成功，即将跳转到管理页面");
-          // 登录成功后自动跳转到后台管理页面
           setTimeout(() => {
             window.location.href = "/console";
           }, 1000);
@@ -139,7 +138,7 @@ const Auth: FC = () => {
       } catch (error) {
         console.error("登录失败", error);
         alert("登录失败，请检查输入信息");
-        fetchImgVerificationCode(data.email);
+        await fetchImgVerificationCode(data.email);
       }
     },
     [fetchImgVerificationCode]
@@ -157,7 +156,7 @@ const Auth: FC = () => {
       } catch (error) {
         console.error("注册失败", error);
         alert("注册失败，请检查输入信息");
-        fetchImgVerificationCode(data.email);
+        await fetchImgVerificationCode(data.email);
       }
     },
     [fetchImgVerificationCode]

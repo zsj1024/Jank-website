@@ -11,4 +11,5 @@ export * from './mode-toggle';
 export * from './navigation-menu';
 export * from './pagination';
 export * from './sheet';
+export * from './skeleton';
 export * from './theme-provider';

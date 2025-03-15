@@ -32,6 +32,9 @@ export default function SponsorPage() {
                 />
                 <span className="text-base font-medium">vxincode</span>
               </a>
+
+              <br></br>
+
               <a
                 href="https://github.com/WowDoers"
                 target="_blank"

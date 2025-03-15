@@ -26,7 +26,6 @@ const PaginationComponent: React.FC<PaginationProps> = ({
     }
   };
 
-  // 优化页码渲染逻辑
   const renderPageNumbers = () => {
     const pageNumbers = [];
     const maxVisiblePages = 5;
@@ -117,41 +116,43 @@ const PaginationComponent: React.FC<PaginationProps> = ({
   };
 
   return (
-    <Pagination className="py-1.5">
-      <PaginationContent className="gap-1">
-        <PaginationItem>
-          <PaginationPrevious
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              if (currentPage > 1) handlePageClick(currentPage - 1);
-            }}
-            className={`border-none rounded-xl transition-colors duration-300 ${
-              currentPage === 1
-                ? "text-foreground/30 dark:text-foreground/30 cursor-not-allowed"
-                : "text-foreground/60 dark:text-foreground/60 hover:bg-foreground/10 hover:text-foreground dark:hover:bg-foreground/10 dark:hover:text-foreground"
-            }`}
-          />
-        </PaginationItem>
+    <>
+      <Pagination className="py-1.5">
+        <PaginationContent className="gap-1">
+          <PaginationItem>
+            <PaginationPrevious
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage > 1) handlePageClick(currentPage - 1);
+              }}
+              className={`border-none rounded-xl transition-colors duration-300 ${
+                currentPage === 1
+                  ? "text-foreground/30 dark:text-foreground/30 cursor-not-allowed"
+                  : "text-foreground/60 dark:text-foreground/60 hover:bg-foreground/10 hover:text-foreground dark:hover:bg-foreground/10 dark:hover:text-foreground"
+              }`}
+            />
+          </PaginationItem>
 
-        {renderPageNumbers()}
+          {renderPageNumbers()}
 
-        <PaginationItem>
-          <PaginationNext
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              if (currentPage < totalPages) handlePageClick(currentPage + 1);
-            }}
-            className={`border-none rounded-xl transition-colors duration-300 ${
-              currentPage === totalPages
-                ? "text-foreground/30 dark:text-foreground/30 cursor-not-allowed"
-                : "text-foreground/60 dark:text-foreground/60 hover:bg-foreground/10 hover:text-foreground dark:hover:bg-foreground/10 dark:hover:text-foreground"
-            }`}
-          />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+          <PaginationItem>
+            <PaginationNext
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage < totalPages) handlePageClick(currentPage + 1);
+              }}
+              className={`border-none rounded-xl transition-colors duration-300 ${
+                currentPage === totalPages
+                  ? "text-foreground/30 dark:text-foreground/30 cursor-not-allowed"
+                  : "text-foreground/60 dark:text-foreground/60 hover:bg-foreground/10 hover:text-foreground dark:hover:bg-foreground/10 dark:hover:text-foreground"
+              }`}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </>
   );
 };
 
