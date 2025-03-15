@@ -44,11 +44,11 @@ export default function Home() {
   );
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
-  const [, setIsVisible] = useState<boolean>(true);
+  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
 
   const fetchData = useCallback(async (page: number) => {
     setError(null);
-    setIsVisible(false);
+    setIsTransitioning(true);
 
     setTimeout(() => {
       setLoading(true);
@@ -62,41 +62,56 @@ export default function Home() {
           setError(null);
         })
         .catch((err) => {
-          setError(err);
+          setError(err as Error);
           setData(null);
         })
         .finally(() => {
           setTimeout(() => {
             setLoading(false);
-            setIsVisible(true);
-          }, 100);
+            setIsTransitioning(false);
+          }, 50);
         });
-    }, 300);
+    }, 50);
   }, []);
 
   useEffect(() => {
     fetchData(currentPage);
   }, [currentPage, fetchData]);
 
+  const handlePageChange = useCallback((page: number) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setCurrentPage(page);
+  }, []);
+
   return (
-    <>
+    <div
+      className={`transition-opacity duration-300 ease-in-out ${
+        isTransitioning ? "opacity-0" : "opacity-100"
+      }`}
+    >
       <div className="grid grid-cols-1 md:grid-cols-[1fr,4fr] gap-2 px-4 mt-4 md:px-0 md:mt-4">
         <div className="flex-1">
           {loading ? (
-            <div></div>
+            <div className="flex justify-center items-center h-64 transition-opacity duration-300 ease-in-out">
+              <div className="animate-pulse w-8 h-8 rounded-full bg-foreground/20"></div>
+            </div>
           ) : error ? (
-            <div>哎呀，好像出错了: {error.message}</div>
+            <div className="text-red-500 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 transition-all duration-300 ease-in-out">
+              哎呀，好像出错了: {error.message}
+            </div>
           ) : (
-            <ArticleList
-              posts={data?.posts || []}
-              totalPages={data?.totalPages || 1}
-              currentPage={currentPage}
-              onPageChange={setCurrentPage}
-              redirectEnabled={true}
-            />
+            <div className="transition-all duration-300 ease-in-out transform translate-y-0 hover:translate-y-0">
+              <ArticleList
+                posts={data?.posts || []}
+                totalPages={data?.totalPages || 1}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+                redirectEnabled={true}
+              />
+            </div>
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

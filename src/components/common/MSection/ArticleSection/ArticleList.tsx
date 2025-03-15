@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/shadcn";
 import { PaginationComponent } from "@/components/common/MSection/PaginationSection/Pagination";
 import { useRouter } from "next/navigation";
@@ -24,52 +24,58 @@ const ArticleList: React.FC<ArticleListProps> = ({
 }) => {
   const router = useRouter();
 
-  const processText = (html: string): string => {
-    const cleanText = (text: string): string =>
-      text.replace(/�/g, "").replace(/\s+/g, " ").trim();
+  // 使用useMemo优化文本处理
+  const processText = useMemo(() => {
+    return (html: string): string => {
+      const cleanText = (text: string): string =>
+        text.replace(/�/g, "").replace(/\s+/g, " ").trim();
 
-    const extractTextFromNode = (node: React.ReactNode): string =>
-      typeof node === "string"
-        ? node
-        : Array.isArray(node)
-        ? node.map(extractTextFromNode).join("")
-        : React.isValidElement(node)
-        ? extractTextFromNode(
-            (node as React.ReactElement<{ children: React.ReactNode }>).props
-              .children
-          )
-        : "";
+      const extractTextFromNode = (node: React.ReactNode): string =>
+        typeof node === "string"
+          ? node
+          : Array.isArray(node)
+          ? node.map(extractTextFromNode).join("")
+          : React.isValidElement(node)
+          ? extractTextFromNode(
+              (node as React.ReactElement<{ children: React.ReactNode }>).props
+                .children
+            )
+          : "";
 
-    const text = extractTextFromNode(parse(html));
-    return cleanText(text);
+      const text = extractTextFromNode(parse(html));
+      return cleanText(text);
+    };
+  }, []);
+
+  const handleCardClick = (postId: number) => {
+    if (redirectEnabled) {
+      router.push(`/posts/${postId}`);
+    }
   };
 
-  const handleCardClick = (postId: number) =>
-    redirectEnabled && router.push(`/posts/${postId}`);
-
   return (
-    <div>
+    <div className="transition-all duration-300 ease-in-out">
       <Card className="w-full">
         <CardContent className="space-y-4 p-4 w-full">
           {posts.map(({ data }) => (
             <div
               key={data.id}
-              className="group flex md:h-[135px] h-[100px] overflow-hidden rounded-xl border hover:shadow-xl cursor-pointer"
+              className="group flex md:h-[135px] h-[100px] overflow-hidden rounded-xl border hover:shadow-xl cursor-pointer transition-all duration-300 ease-in-out"
               onClick={() => handleCardClick(data.id)}
             >
               <div className="relative w-1/3 overflow-hidden">
                 <img
-                  src={data.image || "@/assets/images/loading.svg"}
+                  src={data.image || "/assets/images/loading.svg"}
                   alt={data.title}
                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  loading="lazy"
                 />
               </div>
               <div className="h-full w-2/3 border-l">
                 <div className="flex flex-col justify-center space-y-2 p-4 sm:p-5 md:p-6 transition-transform duration-500 ease-out group-hover:translate-x-3">
-                  <h3 className="md:text-xl">{data.title}</h3>
-                  <p className="text-sm text-muted-foreground overflow-hidden overflow-ellipsis line-clamp-1">
+                  <h3 className="md:text-xl line-clamp-1">{data.title}</h3>
+                  <p className="text-sm text-muted-foreground overflow-hidden overflow-ellipsis line-clamp-2">
                     {processText(data.content_html)}
-                    {data.content_html.length > 40 && "..."}
                   </p>
                 </div>
               </div>

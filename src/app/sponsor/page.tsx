@@ -32,6 +32,19 @@ export default function SponsorPage() {
                 />
                 <span className="text-base font-medium">vxincode</span>
               </a>
+              <a
+                href="https://github.com/WowDoers"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 transition-colors duration-200 hover:text-blue-600"
+              >
+                <img
+                  src="https://github.com/WowDoers.png"
+                  alt="WowDoers"
+                  className="w-10 h-10 rounded-full border border-border/40 dark:border-border/40"
+                />
+                <span className="text-base font-medium">WowDoers</span>
+              </a>
             </div>
           </div>
 
