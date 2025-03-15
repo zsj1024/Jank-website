@@ -1,10 +1,7 @@
-import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/ui/shadcn/theme-provider";
 import { Navbar } from "@/components/common/Navbar/Navbar";
 import { theme } from "../../config/theme.config";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -13,7 +10,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body>
         <ThemeProvider defaultTheme="dark" storageKey="jank-ui-theme">
           <div className="md:px-[12.6%]">
             <Navbar {...theme.NavbarProps} />
