@@ -1,4 +1,5 @@
 import React, { type FC, useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import {
   Button,
   Dialog,
@@ -334,10 +335,13 @@ const Auth: FC = () => {
                         }}
                       >
                         {imgVerificationCode ? (
-                          <img
+                          <Image
                             src={imgVerificationCode}
                             alt="验证码"
+                            width={112}
+                            height={44}
                             className="w-full h-full object-cover"
+                            unoptimized
                           />
                         ) : (
                           <VerificationButton
@@ -487,10 +491,13 @@ const Auth: FC = () => {
                         }}
                       >
                         {imgVerificationCode ? (
-                          <img
+                          <Image
                             src={imgVerificationCode}
                             alt="验证码"
+                            width={112}
+                            height={44}
                             className="w-full h-full object-cover"
+                            unoptimized
                           />
                         ) : (
                           <Button

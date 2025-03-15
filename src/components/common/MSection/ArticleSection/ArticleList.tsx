@@ -136,10 +136,7 @@ const ArticleList: React.FC<ArticleListProps> = ({
                     >
                       <div className="relative w-1/3 overflow-hidden">
                         <img
-                          src={
-                            posts[index].data.image ||
-                            "/assets/images/loading.svg"
-                          }
+                          src={posts[index].data.image}
                           alt={posts[index].data.title}
                           className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                           loading="lazy"

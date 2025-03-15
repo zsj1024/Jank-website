@@ -28,7 +28,6 @@ export interface routes {
   menu: MenuItem[];
 }
 
-// 提取常用的链接样式
 const linkStyle = "text-foreground/80 hover:text-foreground transition-colors";
 const noShadowClass = "shadow-none";
 

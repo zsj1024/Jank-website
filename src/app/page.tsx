@@ -26,11 +26,10 @@ const STYLES = {
 const CONTENT = {
   hero: {
     badge: "轻量级博客系统",
-    title: "简约而不简单-",
-    titleHighlight: "Go",
+    titleHighlight: "Jank",
     titleEnd: "博客系统",
     description:
-      "Jank 是一个极简、低耦合、高扩展的博客系统，基于 Go 语言，内存占用仅 13 MB。",
+      "Jank，基于 Go 语言开发，是一款极简、低耦合且高扩展的博客系统，后端内存占用仅 13 MB。",
     buttons: {
       primary: "快速开始",
       github: "GitHub",
@@ -234,7 +233,6 @@ export default function Home() {
                   {CONTENT.hero.badge}
                 </div>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
-                  {CONTENT.hero.title}
                   <span className="text-primary relative">
                     <span className="relative z-10">
                       {" "}
