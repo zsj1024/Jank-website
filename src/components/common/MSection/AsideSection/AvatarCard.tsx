@@ -14,11 +14,11 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
   const hasNonIcoIcon = socials.some((social) => !isIco(social.icon));
 
   return (
-    <div className="w-60 h-64 p-3 border border-border dark:border-border rounded-xl relative md:block hidden bg-background dark:bg-background shadow-sm">
+    <div className="w-full p-4 border border-border rounded-lg text-card-foreground shadow-sm min-h-[280px] flex flex-col">
       {/* Avatar Section */}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center flex-grow">
         <div
-          className="relative w-36 h-36 mt-1 cursor-pointer"
+          className="relative w-40 h-40 mt-2 cursor-pointer"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -38,7 +38,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
             {backDetails.map((detail, index) => (
               <p
                 key={index}
-                className="text-sm text-center py-1.5 text-foreground dark:text-foreground"
+                className="text-sm text-center py-1 text-card-foreground"
                 style={{
                   opacity: isHovered ? "1" : "0",
                   transition: `opacity 0.5s ease-in-out ${index * 150}ms`,
@@ -52,12 +52,12 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
       </div>
 
       {/* Info Section */}
-      <div className="absolute bottom-2 inset-x-0 px-3 py-2 flex justify-between items-center">
+      <div className="mt-auto flex justify-between items-center">
         <div>
-          <h3 className="text-sm font-medium text-foreground dark:text-foreground">
+          <h3 className="text-sm font-medium text-card-foreground">
             {name}
           </h3>
-          <p className="text-xs text-foreground/60 dark:text-foreground/60 truncate">
+          <p className="text-xs text-card-foreground/60 truncate">
             {title}
           </p>
         </div>
