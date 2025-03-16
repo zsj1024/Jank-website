@@ -37,7 +37,7 @@ const Navbar: FC<routes> = React.memo(({ menu }) => {
   const { accessToken, userInfo } = useAuthStore();
 
   const MobileMenu = () => (
-    <DialogContent className="w-[300px] sm:w-[400px] shadow-none">
+    <DialogContent className="w-[300px] sm:w-[400px] shadow-none ">
       <nav className="flex flex-col gap-3 py-2">
         {menu.map((item) => (
           <div key={item.key} className="px-1">
@@ -75,7 +75,7 @@ const Navbar: FC<routes> = React.memo(({ menu }) => {
 
   return (
     <ThemeProvider>
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="border-b h-14 mb-4 flex px-4 sm:px-6 items-center justify-between min-w-[320px] bg-background">
         <div className="container flex h-14 items-center">
           <div className="mr-4 hidden md:flex">
             <Link href="/" className="mr-6 flex items-center space-x-2">
