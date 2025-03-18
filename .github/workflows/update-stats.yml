@@ -1,0 +1,159 @@
+name: 更新代码统计
+
+on:
+  push:
+    branches:
+      - "*"
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: 安装 cloc
+        run: sudo apt-get install -y cloc
+
+      - name: 统计代码行数
+        id: cloc
+        run: |
+          STATS=$(cloc . --exclude-dir=node_modules,.next,public --exclude-ext=lock,yaml --not-match-f="LICENSE|.gitignore|.dockerignore|README.md|README_en.md|package-lock.json|pnpm-lock.yaml|components.json" --json)
+          TS_FILES=$(echo "$STATS" | jq -r '.TypeScript.nFiles // 0')
+          TS_CODE=$(echo "$STATS" | jq -r '.TypeScript.code // 0')
+          TS_COMMENT=$(echo "$STATS" | jq -r '.TypeScript.comment // 0')
+          TS_BLANK=$(echo "$STATS" | jq -r '.TypeScript.blank // 0')
+          JS_FILES=$(echo "$STATS" | jq -r '.JavaScript.nFiles // 0')
+          JS_CODE=$(echo "$STATS" | jq -r '.JavaScript.code // 0')
+          JS_COMMENT=$(echo "$STATS" | jq -r '.JavaScript.comment // 0')
+          JS_BLANK=$(echo "$STATS" | jq -r '.JavaScript.blank // 0')
+          CSS_FILES=$(echo "$STATS" | jq -r '.CSS.nFiles // 0')
+          CSS_CODE=$(echo "$STATS" | jq -r '.CSS.code // 0')
+          CSS_COMMENT=$(echo "$STATS" | jq -r '.CSS.comment // 0')
+          CSS_BLANK=$(echo "$STATS" | jq -r '.CSS.blank // 0')
+          CONFIG_FILES=$(echo "$STATS" | jq -r '(.JSON.nFiles // 0) + (.YAML.nFiles // 0)')
+          CONFIG_CODE=$(echo "$STATS" | jq -r '(.JSON.code // 0) + (.YAML.code // 0)')
+          CONFIG_COMMENT=$(echo "$STATS" | jq -r '(.JSON.comment // 0) + (.YAML.comment // 0)')
+          CONFIG_BLANK=$(echo "$STATS" | jq -r '(.JSON.blank // 0) + (.YAML.blank // 0)')
+          MD_FILES=$(echo "$STATS" | jq -r '.Markdown.nFiles // 0')
+          MD_CODE=$(echo "$STATS" | jq -r '.Markdown.code // 0')
+          MD_COMMENT=$(echo "$STATS" | jq -r '.Markdown.comment // 0')
+          MD_BLANK=$(echo "$STATS" | jq -r '.Markdown.blank // 0')
+          TOTAL_FILES=$(echo "$STATS" | jq -r '.SUM.nFiles // 0')
+          TOTAL_CODE=$(echo "$STATS" | jq -r '.SUM.code // 0')
+          TOTAL_COMMENT=$(echo "$STATS" | jq -r '.SUM.comment // 0')
+          TOTAL_BLANK=$(echo "$STATS" | jq -r '.SUM.blank // 0')
+          OTHER_FILES=$((TOTAL_FILES - TS_FILES - JS_FILES - CSS_FILES - CONFIG_FILES - MD_FILES))
+          OTHER_CODE=$((TOTAL_CODE - TS_CODE - JS_CODE - CSS_CODE - CONFIG_CODE - MD_CODE))
+          OTHER_COMMENT=$((TOTAL_COMMENT - TS_COMMENT - JS_COMMENT - CSS_COMMENT - CONFIG_COMMENT - MD_COMMENT))
+          OTHER_BLANK=$((TOTAL_BLANK - TS_BLANK - JS_BLANK - CSS_BLANK - CONFIG_BLANK - MD_BLANK))
+          if [ "$TOTAL_CODE" -eq "0" ] || [ "$TOTAL_CODE" = "null" ]; then
+            TS_PERCENT="0.0%"
+            JS_PERCENT="0.0%"
+            CSS_PERCENT="0.0%"
+            CONFIG_PERCENT="0.0%"
+            MD_PERCENT="0.0%"
+            OTHER_PERCENT="0.0%"
+          else
+            TS_PERCENT=$(awk "BEGIN {printf \"%.1f%%\", ($TS_CODE / $TOTAL_CODE) * 100}")
+            JS_PERCENT=$(awk "BEGIN {printf \"%.1f%%\", ($JS_CODE / $TOTAL_CODE) * 100}")
+            CSS_PERCENT=$(awk "BEGIN {printf \"%.1f%%\", ($CSS_CODE / $TOTAL_CODE) * 100}")
+            CONFIG_PERCENT=$(awk "BEGIN {printf \"%.1f%%\", ($CONFIG_CODE / $TOTAL_CODE) * 100}")
+            MD_PERCENT=$(awk "BEGIN {printf \"%.1f%%\", ($MD_CODE / $TOTAL_CODE) * 100}")
+            OTHER_PERCENT=$(awk "BEGIN {printf \"%.1f%%\", ($OTHER_CODE / $TOTAL_CODE) * 100}")
+          fi
+          CURRENT_DATE=$(date +"%Y-%m-%d")
+          echo '| 语言 | 文件数 | 代码行数 | 注释行数 | 空白行数 | 占比 |' > stats_table.md
+          echo '|:----:|:------:|:--------:|:--------:|:--------:|:----:|' >> stats_table.md
+          echo "| TypeScript | $TS_FILES | $TS_CODE | $TS_COMMENT | $TS_BLANK | $TS_PERCENT |" >> stats_table.md
+          echo "| JavaScript | $JS_FILES | $JS_CODE | $JS_COMMENT | $JS_BLANK | $JS_PERCENT |" >> stats_table.md
+          echo "| CSS | $CSS_FILES | $CSS_CODE | $CSS_COMMENT | $CSS_BLANK | $CSS_PERCENT |" >> stats_table.md
+          echo "| 配置文件 | $CONFIG_FILES | $CONFIG_CODE | $CONFIG_COMMENT | $CONFIG_BLANK | $CONFIG_PERCENT |" >> stats_table.md
+          echo "| Markdown | $MD_FILES | $MD_CODE | $MD_COMMENT | $MD_BLANK | $MD_PERCENT |" >> stats_table.md
+          echo "| 其他 | $OTHER_FILES | $OTHER_CODE | $OTHER_COMMENT | $OTHER_BLANK | $OTHER_PERCENT |" >> stats_table.md
+          echo "| **总计** | **$TOTAL_FILES** | **$TOTAL_CODE** | **$TOTAL_COMMENT** | **$TOTAL_BLANK** | **100%** |" >> stats_table.md
+          echo "" >> stats_table.md
+          echo "*注：统计数据由 GitHub Actions 自动更新，最后更新于 $CURRENT_DATE*" >> stats_table.md
+          echo "*排除了 node_modules、.next、public 目录和 package-lock.json、pnpm-lock.yaml、components.json、LICENSE、.gitignore、.dockerignore、README.md、README_en.md 文件*" >> stats_table.md
+          echo '| Language | Files | Code Lines | Comment Lines | Blank Lines | Percentage |' > stats_table_en.md
+          echo '|:--------:|:-----:|:----------:|:-------------:|:-----------:|:----------:|' >> stats_table_en.md
+          echo "| TypeScript | $TS_FILES | $TS_CODE | $TS_COMMENT | $TS_BLANK | $TS_PERCENT |" >> stats_table_en.md
+          echo "| JavaScript | $JS_FILES | $JS_CODE | $JS_COMMENT | $JS_BLANK | $JS_PERCENT |" >> stats_table_en.md
+          echo "| CSS | $CSS_FILES | $CSS_CODE | $CSS_COMMENT | $CSS_BLANK | $CSS_PERCENT |" >> stats_table_en.md
+          echo "| Config Files | $CONFIG_FILES | $CONFIG_CODE | $CONFIG_COMMENT | $CONFIG_BLANK | $CONFIG_PERCENT |" >> stats_table_en.md
+          echo "| Markdown | $MD_FILES | $MD_CODE | $MD_COMMENT | $MD_BLANK | $MD_PERCENT |" >> stats_table_en.md
+          echo "| Others | $OTHER_FILES | $OTHER_CODE | $OTHER_COMMENT | $OTHER_BLANK | $OTHER_PERCENT |" >> stats_table_en.md
+          echo "| **Total** | **$TOTAL_FILES** | **$TOTAL_CODE** | **$TOTAL_COMMENT** | **$TOTAL_BLANK** | **100%** |" >> stats_table_en.md
+          echo "" >> stats_table_en.md
+          echo "*Note: Statistics are automatically updated by GitHub Actions, last updated on $CURRENT_DATE*" >> stats_table_en.md
+          echo "*Excluded node_modules, .next, public directories and package-lock.json, pnpm-lock.yaml, components.json, LICENSE, .gitignore, .dockerignore, README.md, README_en.md files*" >> stats_table_en.md
+          if grep -q "### 详细统计" README.md; then
+            sed -i '/### 详细统计/,/^## /{ /### 详细统计/!{ /^## /!d; }; }' README.md
+            sed -i '/### 详细统计/r stats_table.md' README.md
+          else
+            echo -e "\n### 详细统计" >> README.md
+            cat stats_table.md >> README.md
+          fi
+          if grep -q "### Detailed Statistics" README_en.md; then
+            sed -i '/### Detailed Statistics/,/^## /{ /### Detailed Statistics/!{ /^## /!d; }; }' README_en.md
+            sed -i '/### Detailed Statistics/r stats_table_en.md' README_en.md
+          else
+            echo -e "\n### Detailed Statistics" >> README_en.md
+            cat stats_table_en.md >> README_en.md
+          fi
+          rm stats_table.md stats_table_en.md
+
+      - name: 提交更改
+        run: |
+          BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+          if git diff --quiet README.md README_en.md; then
+            exit 0
+          fi
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md README_en.md
+          git commit -m "chore(docs): 更新代码统计报告 [分支: $BRANCH_NAME] [skip ci]"
+          git push origin $BRANCH_NAME"标题，则替换该部分内容
+            sed -i '/### 详细统计/,/^## /{ /### 详细统计/!{ /^## /!d; }; }' README.md
+            sed -i '/### 详细统计/r stats_table.md' README.md
+          else
+            # 如果不存在，则在文件末尾添加
+            echo -e "\n### 详细统计" >> README.md
+            cat stats_table.md >> README.md
+          fi
+
+          # 更新英文 README
+          if grep -q "### Detailed Statistics" README_en.md; then
+            # 如果存在"Detailed Statistics"标题，则替换该部分内容
+            sed -i '/### Detailed Statistics/,/^## /{ /### Detailed Statistics/!{ /^## /!d; }; }' README_en.md
+            sed -i '/### Detailed Statistics/r stats_table_en.md' README_en.md
+          else
+            # 如果不存在，则在文件末尾添加
+            echo -e "\n### Detailed Statistics" >> README_en.md
+            cat stats_table_en.md >> README_en.md
+          fi
+
+          # 清理临时文件
+          rm stats_table.md stats_table_en.md
+
+      - name: 提交更改
+        run: |
+          BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+          # 检查是否有更改
+          if git diff --quiet README.md README_en.md; then
+            echo "没有变更需要提交"
+            exit 0
+          fi
+
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md README_en.md
+          git commit -m "chore(docs): 更新代码统计报告 [分支: $BRANCH_NAME] [skip ci]"
+          git push origin $BRANCH_NAME

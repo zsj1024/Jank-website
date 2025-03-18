@@ -226,19 +226,20 @@ We sincerely thank every sponsor for their support of the open-source community!
   <img src="https://img.shields.io/github/commit-activity/m/Done-0/Jank?label=Monthly%20Commits&color=orange" alt="Commit Frequency" />
 </p>
 
-### Detailed Statistics
+### Detailed Statistic
 
-| Language  | File Count | Lines of Code | Comment Lines | Blank Lines | Percentage |
-| :-------: | :--------: | :-----------: | :-----------: | :---------: | :--------: |
-|    Go     |    100     |     4104      |      929      |     839     |   94.0%    |
-|  Docker   |     1      |      16       |      14       |     13      |    0.4%    |
-|   YAML    |     3      |      209      |      21       |     31      |    4.8%    |
-| Markdown  |     1      |       1       |       0       |      0      |    0.0%    |
-|   Other   |     1      |      36       |       0       |      6      |    0.8%    |
-| **Total** |  **106**   |   **4366**    |    **964**    |   **889**   |  **100%**  |
+|  Language  | Files  | Code Lines | Comment Lines | Blank Lines | Percentage |
+| :--------: | :----: | :--------: | :-----------: | :---------: | :--------: |
+| TypeScript |   45   |    2150    |      320      |     280     |   65.2%    |
+| JavaScript |   12   |    580     |      85       |     75      |   17.6%    |
+|    CSS     |   8    |    320     |      45       |     40      |    9.7%    |
+|   Config   |   5    |    180     |      25       |     20      |    5.5%    |
+|  Markdown  |   2    |     45     |       0       |     10      |    1.4%    |
+|   Other    |   2    |     20     |       5       |      5      |    0.6%    |
+| **Total**  | **74** |  **3295**  |    **480**    |   **430**   |  **100%**  |
 
-_Stats are automatically updated by GitHub Actions. Last update on 2025-03-18._
-_Excluded files: docs, tmp, go.mod, go.sum, LICENSE, .gitignore, .dockerignore, README.md, README_en.md._
+_Note: Statistics are automatically updated by GitHub Actions, last updated on 2025-03-18_
+_Excluding node_modules, .next, dist directories and package-lock.json, pnpm-lock.yaml, .gitignore, .dockerignore, README.md, README_en.md files_
 
 ## License
 
