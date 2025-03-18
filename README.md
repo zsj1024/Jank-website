@@ -1,252 +1,248 @@
-# Jank Website - 现代化中大型前端项目架构
+<p style="text-align: center;">
+  <a><img src="https://s2.loli.net/2025/03/14/BnchjpPLeIaoO75.png" alt="Jank"></a>
+</p>
+<p style="text-align: center;">
+  <em>Jank，一个轻量级的博客系统，基于 Go 语言和 Echo 框架开发，强调极简、低耦合和高扩展</em>
+</p>
+<p style="text-align: center;">
+  <a href="https://img.shields.io/github/stars/Done-0/Jank?style=social" target="_blank">
+    <img src="https://img.shields.io/github/stars/Done-0/Jank?style=social" alt="Stars">
+  </a> &nbsp;
+  <a href="https://img.shields.io/github/forks/Done-0/Jank?style=social" target="_blank">
+    <img src="https://img.shields.io/github/forks/Done-0/Jank?style=social" alt="Forks">
+  </a> &nbsp;
+  <a href="https://img.shields.io/github/contributors/Done-0/Jank" target="_blank">
+    <img src="https://img.shields.io/github/contributors/Done-0/Jank" alt="Contributors">
+  </a> &nbsp;
+  <a href="https://img.shields.io/github/issues/Done-0/Jank" target="_blank">
+    <img src="https://img.shields.io/github/issues/Done-0/Jank" alt="Issues">
+  </a> &nbsp;
+  <a href="https://img.shields.io/github/issues-pr/Done-0/Jank" target="_blank">
+    <img src="https://img.shields.io/github/issues-pr/Done-0/Jank" alt="Pull Requests">
+  </a> &nbsp;
+  <a href="https://img.shields.io/github/license/Done-0/Jank" target="_blank">
+    <img src="https://img.shields.io/github/license/Done-0/Jank" alt="License">
+  </a>
+</p>
+<p align="center">
+  <span style="text-decoration: underline; color: grey;">简体中文</span> | <a href="README_en.md" style="text-decoration: none;">English</a>
+</p>
 
-## 项目概述
+---
 
-Jank Website 是一个基于 Next.js 15 构建的现代化、高性能的博客系统，采用了最新的前端技术栈和架构设计理念。本项目架构设计面向中大型应用，具有低耦合、高扩展性的特点，适合长期维护和团队协作开发。
+Jank 是一个轻量级的博客系统，基于 Go 语言和 Echo 框架开发，设计理念强调极简、低耦合和高扩展，旨在为用户提供功能丰富、界面简洁、操作简单且安全可靠的博客体验。
+
+> 注：本项目当前缺少前端部分，在此诚邀有志于前端开发的开发者加入，共同参与开发工作，期待您的宝贵意见和贡献！
+
+## 速览
+
+👉 演示站｜Demo：[https://fenderisfine.icu](https://fenderisfine.icu)
+
+👉[【Jank 博客系统】全新技术栈与 UI】](https://www.bilibili.com/video/BV1bjQ8YNEEo/?share_source=copy_web&vd_source=6fd45877cd498bfb9c2b449d1197363c)
+
+👉 前端仓库：[https://github.com/Done-0/Jank-website](https://github.com/Done-0/Jank-website)
+
+![home-page.png](https://s2.loli.net/2025/03/18/CVYwRJOaXtH4nb8.png)
+![posts-page.png](https://s2.loli.net/2025/03/18/s6WH3BVmlbyarRS.png)
+![post2-page.png](https://s2.loli.net/2025/03/18/TS1j9Zr7UpnVPOY.png)
+
+> 注：因为还在推出阶段，部分配置文件可能需要根据实际情况更改，具体请使用下面的联系方式联系作者，或者进入开发者社区交流。
 
 ## 技术栈
 
-- **框架**: Next.js 15 (React 19)
-- **语言**: TypeScript
-- **样式**: Tailwind CSS + shadcn/ui
-- **状态管理**: Zustand
-- **表单处理**: React Hook Form
-- **HTTP 客户端**: Axios
-- **包管理**: pnpm
-
-## 架构设计原则
-
-本项目架构遵循以下设计原则：
-
-1. **关注点分离**: 将业务逻辑、UI 展示、状态管理和数据获取清晰分离
-2. **模块化**: 通过模块化设计降低系统复杂度，提高代码可维护性
-3. **可测试性**: 架构设计便于单元测试和集成测试
-4. **可扩展性**: 支持功能扩展和业务增长，无需大规模重构
-5. **性能优先**: 从架构层面考虑性能优化，包括代码分割、懒加载等策略
-
-## 目录结构
-
-```
-├── config/                # 全局配置
-│   ├── config.ts         # 应用配置
-│   ├── routes.ts         # 路由配置
-│   └── theme.config.ts   # 主题配置
-├── public/               # 静态资源
-├── src/
-│   ├── api/              # API 接口层
-│   │   ├── account.ts    # 账户相关 API
-│   │   ├── category.ts   # 分类相关 API
-│   │   ├── post.ts       # 文章相关 API
-│   │   └── verification.ts # 验证相关 API
-│   ├── app/              # Next.js App Router 页面
-│   │   ├── layout.tsx    # 根布局
-│   │   ├── page.tsx      # 首页
-│   │   └── [routes]/     # 其他路由页面
-│   ├── components/       # 组件
-│   │   ├── common/       # 通用业务组件
-│   │   │   ├── Auth/     # 认证相关组件
-│   │   │   ├── Error/    # 错误处理组件
-│   │   │   ├── MSection/ # 页面区块组件
-│   │   │   └── Navbar/   # 导航组件
-│   │   └── ui/           # UI 组件
-│   │       └── shadcn/   # shadcn UI 组件
-│   ├── lib/              # 工具库
-│   │   ├── axios/        # Axios 配置
-│   │   └── utils.ts      # 通用工具函数
-│   ├── store/            # 状态管理
-│   │   └── auth.ts       # 认证状态
-│   ├── types/            # TypeScript 类型定义
-│   │   ├── Account.d.ts  # 账户相关类型
-│   │   ├── Auth.d.ts     # 认证相关类型
-│   │   ├── HttpType.d.ts # HTTP 相关类型
-│   │   ├── Post.d.ts     # 文章相关类型
-│   │   └── index.ts      # 类型导出
-│   └── utils/            # 工具函数
-│       ├── decode/       # 解码工具
-│       └── index.ts      # 工具函数导出
-└── [配置文件]            # 项目配置文件
-```
-
-## 架构分层
-
-### 1. 表现层 (Presentation Layer)
-
-- **页面 (Pages)**: 位于 `src/app` 目录，基于 Next.js App Router
-- **组件 (Components)**:
-  - **业务组件**: `src/components/common` - 包含特定业务逻辑的组件
-  - **UI 组件**: `src/components/ui` - 纯展示型组件，无业务逻辑
-
-### 2. 应用层 (Application Layer)
+- **Go 语言**：热门后端开发语言，适合构建高并发应用。
+- **Echo 框架**：高性能的 Web 框架，支持快速开发和灵活的路由管理。
+- **PostgreSQL**：开源的关系型数据库，提供高性能、高可靠性的数据存储。
+- **Redis**：热门缓存解决方案，提供快速数据存取和持久化选项。
+- **JWT**：安全的用户身份验证机制，确保数据传输的完整性和安全性。
+- **Docker**：容器化部署工具，简化应用的打包和分发流程。
+- **前端**：react + umi + shadcn/ui + tailwindcss。
+
+## 功能模块
+
+- **账户模块**：实现 JWT 身份验证，支持用户登录、注册、注销、密码修改和个人信息更新。
+- **权限模块**：实现 RBAC（Role-Based Access Control）角色权限管理，支持用户-角色-权限的增删改查。
+  - 基本功能已实现，考虑到用户使用的不友好性和复杂性，因此暂不推出此功能。
+- **文章模块**：提供文章的创建、查看、更新和删除功能。
+- **分类模块**：支持类目树及子类目树递归查询，单一类目查询，以及类目的创建、更新和删除。
+- **评论模块**：提供评论的创建、查看、删除和回复功能，支持评论树结构的展示。
+- **插件系统**：正在火热开发中，即将推出...
+- **其他功能**：
+  - 提供 OpenAPI 接口文档
+  - 集成 Air 实现热重载
+  - 提供 Logrus 实现日志记录
+  - 支持 CORS 跨域请求
+  - 提供 CSRF 和 XSS 防护
+  - 支持 Markdown 的服务端渲染
+  - **其他模块正在开发中**，欢迎提供宝贵意见和建议！
+
+## 本地开发
 
-- **状态管理**: `src/store` - 使用 Zustand 管理全局状态
-- **API 服务**: `src/api` - 封装后端 API 调用
+1. **安装依赖**：
 
-### 3. 领域层 (Domain Layer)
+   ```bash
+   # 安装 swagger 工具
+   go install github.com/swaggo/swag/cmd/swag@latest
 
-- **类型定义**: `src/types` - 定义业务实体和数据模型
-- **业务逻辑**: 在组件和 hooks 中实现特定业务逻辑
+   # 安装依赖包
+   go mod tidy
+   ```
 
-### 4. 基础设施层 (Infrastructure Layer)
+2. **配置数据库和邮箱**：  
+    修改 `configs/config.yaml` 文件中的数据库配置和邮箱配置，示例如下：
 
-- **HTTP 客户端**: `src/lib/axios` - 配置 Axios 实例
-- **工具函数**: `src/utils` 和 `src/lib` - 提供通用功能
+   ```yaml
+   database:
+     DB_DIALECT: "postgres" # 数据库类型, 可选值: postgres, mysql, sqlite
+     DB_NAME: "jank_db"
+     DB_HOST: "127.0.0.1" # 如果使用docker，则改为"postgres_db"
+     DB_PORT: "5432"
+     DB_USER: "<DATABASE_USER>"
+     DB_PSW: "<DATABASE_PASSWORD>"
+     DB_PATH: "./database" # SQLite 数据库文件路径
 
-## 状态管理策略
+   # 邮箱类型和 SMTP 授权码（可选）
+   EMAIL_TYPE: "qq" # 邮箱类型，可选值: qq, gmail, outlook
+   FROM_EMAIL: "<FROM_EMAIL>" # 发件人邮箱
+   EMAIL_SMTP: "<EMAIL_SMTP>" # SMTP 授权码
+   ```
 
-本项目采用分层状态管理策略：
+3. **启动服务**：  
+   使用以下命令启动应用：
 
-1. **局部状态**: 使用 React 的 `useState` 和 `useReducer` 管理组件内部状态
-2. **全局状态**: 使用 Zustand 管理跨组件共享的状态，如用户认证信息
-3. **服务器状态**: 使用 SWR 或 React Query 管理从服务器获取的数据（可选扩展）
+   ```bash
+   go run main.go
+   ```
 
-### Zustand 状态设计原则
+   或使用 Air 进行热重载：
 
-- 按领域划分 store（auth, theme 等）
-- 使用 persist 中间件持久化关键状态
-- 提供清晰的 actions 修改状态
+   > 此方法最为便捷，但提前配置环境变量 GOPATH。
 
-## 组件设计模式
+   ```bash
+   # 安装 air，需要 go 1.22 或更高版本
+   go install github.com/air-verse/air@latest
 
-### 组件分类
+   # 热重载启动
+   air -c ./configs/.air.toml
+   ```
 
-1. **页面组件 (Page Components)**: 对应路由的顶层组件，位于 `src/app` 目录
-2. **容器组件 (Container Components)**: 处理数据获取和状态管理，不关注 UI 样式
-3. **展示组件 (Presentational Components)**: 纯 UI 组件，通过 props 接收数据
-4. **布局组件 (Layout Components)**: 处理页面布局，如 `layout.tsx`
-5. **HOC (高阶组件)**: 用于复用组件逻辑
-6. **自定义 Hooks**: 封装和复用状态逻辑
+4. **访问接口**：  
+   本地启动应用后，浏览器访问 [http://localhost:9010/ping](http://localhost:9010/ping)
 
-### 组件设计原则
+## Docker 容器部署（postgres）
 
-- **单一职责**: 每个组件只负责一个功能点
-- **可组合性**: 小型、可复用的组件优于大型、特定用途的组件
-- **Props 接口**: 使用 TypeScript 定义清晰的 props 接口
-- **默认值**: 为非必需 props 提供合理的默认值
-- **错误处理**: 优雅处理加载状态和错误状态
+1. 修改 `configs/config.yaml` 文件中的数据库配置和邮箱配置，示例如下：
 
-## API 层设计
+   ```yaml
+   APP_HOST: "0.0.0.0" # 如果使用docker，则改为"0.0.0.0"
 
-- API 调用集中在 `src/api` 目录管理
-- 按领域划分 API 文件（account, post 等）
-- 使用 TypeScript 类型确保请求和响应的类型安全
-- 统一错误处理和响应转换
+   database:
+     DB_DIALECT: "postgres" # 数据库类型, 可选值: postgres, mysql, sqlite
+     DB_NAME: "jank_db"
+     DB_HOST: "postgres_db" # 如果使用docker，则改为"postgres_db"
+     DB_PORT: "5432"
+     DB_USER: "<DATABASE_USER>"
+     DB_PSW: "<DATABASE_PASSWORD>"
+     DB_PATH: "./database" # SQLite 数据库文件路径
 
-## 路由设计
+   # 邮箱类型和 SMTP 授权码（可选）
+   EMAIL_TYPE: "qq" # 邮箱类型，可选值: qq, gmail, outlook
+   FROM_EMAIL: "<FROM_EMAIL>" # 发件人邮箱
+   EMAIL_SMTP: "<EMAIL_SMTP>" # SMTP 授权码
+   ```
 
-- 基于 Next.js App Router 的文件系统路由
-- 路由结构清晰，反映业务领域
-- 支持动态路由和嵌套布局
+2. 修改 `docker-compose.yaml` 文件中的环境变量，示例如下：
 
-## 样式解决方案
+   ```yaml
+   environment:
+     - POSTGRES_USER=<DATABASE_USER>
+     - POSTGRES_PASSWORD=<DATABASE_PASSWORD>
+   ```
 
-- 使用 Tailwind CSS 实现原子化 CSS
-- 结合 shadcn/ui 提供一致的组件库
-- 支持主题切换（暗/亮模式）
+3. 启动容器：
 
-## 性能优化策略
+   ```bash
+   docker-compose up -d
+   ```
 
-1. **代码分割**: 利用 Next.js 的自动代码分割
-2. **图片优化**: 使用 Next.js Image 组件优化图片加载
-3. **懒加载**: 对非关键组件使用 `React.lazy` 和 `Suspense`
-4. **缓存策略**: 合理使用 SWR 或 React Query 的缓存功能
-5. **Bundle 分析**: 定期分析并优化打包体积
+## 接口文档
 
-## 测试策略
+1. **本地启动查看 swagger 文档**：本地启动应用后，通过浏览器访问 [http://localhost:9010/swagger/index.html](http://localhost:9010/swagger/index.html)
 
-1. **单元测试**: 使用 Jest 和 React Testing Library 测试组件和工具函数
-2. **集成测试**: 测试组件组合和页面功能
-3. **E2E 测试**: 使用 Cypress 或 Playwright 进行端到端测试
+2. **README.md 文档**：在 `docs` 目录下，打开 `README.md` 文件查看。
 
-## 扩展性设计
+3. **postman 文档**：在 `docs` 目录下，导入 `docs/Jank_blog.postman_collection.json` 至 Postman 查看。
 
-### 微前端架构准备
+## roadmap（船新推出）
 
-当应用规模扩大时，可以平滑过渡到微前端架构：
+![image.png](https://s2.loli.net/2025/03/09/qJrtOeFvD95PV4Y.png)
 
-1. **Module Federation**: 使用 Webpack Module Federation 实现模块共享
-2. **独立部署**: 各微应用可独立开发、测试和部署
-3. **共享依赖**: 核心库和组件可在微应用间共享
+> 注：黑色为已完成部分，白色色为待完成部分。
 
-### 国际化支持
+## 架构图（待更新）
 
-- 使用 next-intl 或 react-i18next 实现多语言支持
-- 提取文本到语言文件，支持动态切换语言
+**架构图及可视化接口文档**：在项目根目录中打开 `docs/jank_blog_architecture.drawio` 文件。
 
-## 开发工作流
+> 注：该文档由 `draw.io` 绘制，需要使用 [draw.io](https://app.diagrams.net/) 工具打开。
 
-### 开发环境设置
+## 官方社区
 
-```bash
-# 安装依赖
-pnpm install
+如果有任何疑问或建议，欢迎加入官方社区交流。
 
-# 启动开发服务器
-pnpm dev
+<img src="https://s2.loli.net/2025/01/25/L9BspuHnrIeim7S.jpg" alt="官方社区" width="300" />
 
-# 构建生产版本
-pnpm build
+## 特别鸣谢
 
-# 启动生产服务器
-pnpm start
+感谢各位对开源社区的支持，在此诚挚地对每一位赞助者表示感谢！
 
-# 代码检查
-pnpm lint
-```
+<p>
+  <a href="https://github.com/vxincode">
+    <img src="https://github.com/vxincode.png" width="80" height="80" style="border-radius: 50%;" />
+  </a>
+  <a href="https://github.com/WowDoers">
+    <img src="https://github.com/WowDoers.png" width="80" height="80" style="border-radius: 50%;" />
+  </a>
+</p>
 
-### Git 工作流
+## 联系合作
 
-- 使用 Git Flow 或 GitHub Flow
-- 主分支: `main` (生产) 和 `develop` (开发)
-- 功能分支: `feature/xxx`
-- 修复分支: `bugfix/xxx`
-- 发布分支: `release/x.x.x`
+- **QQ**: 927171598
+- **邮箱**：<EMAIL>fenderisfine@outlook.com
+- **开发者社区(QQ)**：828270460
 
-### CI/CD 流程
+## 贡献者名单
 
-1. **代码提交**: 开发者提交代码到功能分支
-2. **自动化测试**: CI 运行代码检查和自动化测试
-3. **代码审查**: 通过 Pull Request 进行代码审查
-4. **预览环境**: 自动部署到预览环境
-5. **生产部署**: 合并到主分支后自动部署到生产环境
+<a href="https://github.com/Done-0/Jank/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Done-0/Jank" alt="贡献者名单" />
+</a>
 
-## 最佳实践
+## 代码统计
 
-### 代码规范
+<p align="left">
+  <img src="https://img.shields.io/github/languages/top/Done-0/Jank?label=主要语言&color=00ADD8" alt="主要语言" />
+  <img src="https://img.shields.io/github/languages/code-size/Done-0/Jank?label=代码体积&color=success" alt="代码体积" />
+  <img src="https://img.shields.io/github/last-commit/Done-0/Jank?label=最后提交&color=blue" alt="最后提交" />
+  <img src="https://img.shields.io/github/commit-activity/m/Done-0/Jank?label=月提交&color=orange" alt="提交频率" />
+</p>
 
-- 使用 ESLint 和 Prettier 保持代码风格一致
-- 遵循 TypeScript 最佳实践，严格类型检查
-- 组件命名使用 PascalCase，文件名与组件名一致
-- 工具函数使用 camelCase
+### 详细统计
 
-### 安全最佳实践
+|   语言   | 文件数  | 代码行数 | 注释行数 | 空白行数 |   占比   |
+| :------: | :-----: | :------: | :------: | :------: | :------: |
+|    Go    |   100   |   4104   |   929    |   839    |  94.0%   |
+|  Docker  |    1    |    16    |    14    |    13    |   0.4%   |
+|   YAML   |    3    |   209    |    21    |    31    |   4.8%   |
+| Markdown |    1    |    1     |    0     |    0     |   0.0%   |
+|   其他   |    1    |    36    |    0     |    6     |   0.8%   |
+| **总计** | **106** | **4366** | **964**  | **889**  | **100%** |
 
-- 所有用户输入进行验证和清洗
-- 实现 CSRF 保护
-- 使用 HTTPS
-- 敏感信息不存储在客户端
+_注：统计数据由 GitHub Actions 自动更新，最后更新于 2025-03-18_
+_排除了 docs、tmp 目录和 go.mod、go.sum、LICENSE、.gitignore、.dockerignore、README.md、README_en.md 文件_
 
-### 可访问性 (A11y)
+## 许可证
 
-- 遵循 WCAG 2.1 指南
-- 使用语义化 HTML
-- 确保键盘可访问性
-- 提供适当的颜色对比度
+本项目遵循 [MIT 协议](https://opensource.org/licenses/MIT)。
 
-## 未来扩展
+## 增长趋势
 
-1. **PWA 支持**: 添加 Service Worker 和 Manifest
-2. **服务器组件**: 充分利用 Next.js 的服务器组件
-3. **实时功能**: 集成 WebSocket 或 Server-Sent Events
-4. **分析与监控**: 添加性能监控和用户行为分析
-
-## 结论
-
-本架构设计为中大型前端项目提供了坚实的基础，具有以下优势：
-
-- **可维护性**: 清晰的目录结构和分层设计
-- **可扩展性**: 模块化设计支持业务增长
-- **开发效率**: 现代化工具链提高开发效率
-- **性能**: 内置性能优化策略
-- **协作**: 支持团队协作开发
-
-通过遵循本文档中的架构设计和最佳实践，团队可以构建高质量、可维护的前端应用，并随着业务需求的变化灵活扩展。
+<img src="https://api.star-history.com/svg?repos=Done-0/Jank&type=timeline" width="100%" height="65%" alt="GitHub Stats">

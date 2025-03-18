@@ -24,11 +24,12 @@ export const createOnePost = (data: {
   visibility?: string,
   category_ids: number[]
 }): Promise<HttpResponse<any>> => {
-  return http.post('/post/createOnePost', data);
+  return http.post('/v1/post/createOnePost', data);
 };
 
 /** 更新文章 */
 export const updateOnePost = (data: {
+  id: number,
   contentMarkdown: string,
   image?: string,
   title: string,
@@ -40,5 +41,5 @@ export const updateOnePost = (data: {
 
 /** 删除文章 */
 export const deleteOnePost = (data: { id: number }): Promise<HttpResponse<any>> => {
-  return http.delete('/v1/post/deleteOnePost', data);
+  return http.delete('/v1/post/deleteOnePost', { data });
 };
