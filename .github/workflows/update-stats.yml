@@ -119,28 +119,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add README.md README_en.md
           git commit -m "chore(docs): 更新代码统计报告 [分支: $BRANCH_NAME] [skip ci]"
-          git push origin $BRANCH_NAME"标题，则替换该部分内容
-            sed -i '/### 详细统计/,/^## /{ /### 详细统计/!{ /^## /!d; }; }' README.md
-            sed -i '/### 详细统计/r stats_table.md' README.md
-          else
-            # 如果不存在，则在文件末尾添加
-            echo -e "\n### 详细统计" >> README.md
-            cat stats_table.md >> README.md
-          fi
-
-          # 更新英文 README
-          if grep -q "### Detailed Statistics" README_en.md; then
-            # 如果存在"Detailed Statistics"标题，则替换该部分内容
-            sed -i '/### Detailed Statistics/,/^## /{ /### Detailed Statistics/!{ /^## /!d; }; }' README_en.md
-            sed -i '/### Detailed Statistics/r stats_table_en.md' README_en.md
-          else
-            # 如果不存在，则在文件末尾添加
-            echo -e "\n### Detailed Statistics" >> README_en.md
-            cat stats_table_en.md >> README_en.md
-          fi
-
-          # 清理临时文件
-          rm stats_table.md stats_table_en.md
+          git push origin "$BRANCH_NAME"
 
       - name: 提交更改
         run: |
@@ -156,4 +135,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add README.md README_en.md
           git commit -m "chore(docs): 更新代码统计报告 [分支: $BRANCH_NAME] [skip ci]"
-          git push origin $BRANCH_NAME
+          git push origin "$BRANCH_NAME"
