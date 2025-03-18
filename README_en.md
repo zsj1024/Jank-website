@@ -248,3 +248,17 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 ## Growth Trends
 
 <img src="https://api.star-history.com/svg?repos=Done-0/Jank&type=timeline" width="100%" height="65%" alt="GitHub Stats">
+
+### Detailed Statistics
+| Language | Files | Code Lines | Comment Lines | Blank Lines | Percentage |
+|:--------:|:-----:|:----------:|:-------------:|:-----------:|:----------:|
+| TypeScript | 55 | 4698 | 137 | 463 | 89.5% |
+| JavaScript | 2 | 19 | 0 | 5 | 0.4% |
+| CSS | 1 | 289 | 12 | 44 | 5.5% |
+| Config Files | 3 | 218 | 1 | 8 | 4.2% |
+| Markdown | 0 | 0 | 0 | 0 | 0.0% |
+| Others | 2 | 25 | 11 | 9 | 0.5% |
+| **Total** | **63** | **5249** | **161** | **529** | **100%** |
+
+*Note: Statistics are automatically updated by GitHub Actions, last updated on 2025-03-18*
+*Excluded node_modules, .next, public directories and package-lock.json, pnpm-lock.yaml, components.json, LICENSE, .gitignore, .dockerignore, README.md, README_en.md files*
