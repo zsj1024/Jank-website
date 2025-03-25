@@ -260,5 +260,5 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 | Others | 2 | 25 | 11 | 9 | 0.5% |
 | **Total** | **63** | **5249** | **161** | **529** | **100%** |
 
-*Note: Statistics are automatically updated by GitHub Actions, last updated on 2025-03-24*
+*Note: Statistics are automatically updated by GitHub Actions, last updated on 2025-03-25*
 *Excluded node_modules, .next, public directories and package-lock.json, pnpm-lock.yaml, components.json, LICENSE, .gitignore, .dockerignore, README.md, README_en.md files*
