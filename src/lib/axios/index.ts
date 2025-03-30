@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/store/auth";
+import { useAuthStore } from '@/store/auth'
 
 /**
  * 默认请求配置
@@ -10,20 +10,20 @@ const defaultConfig = {
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 5000,
   headers: {
-    "Content-Type": "application/json",
-  },
-};
+    'Content-Type': 'application/json'
+  }
+}
 
 /**
  * 请求配置接口
  */
 interface HttpRequestOptions {
-  method?: "GET" | "POST" | "PUT" | "DELETE";
-  data?: any;
-  params?: Record<string, any> | string[][] | URLSearchParams;
-  headers?: Record<string, string>;
-  timeout?: number;
-  withToken?: boolean;
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  data?: any
+  params?: Record<string, any> | string[][] | URLSearchParams
+  headers?: Record<string, string>
+  timeout?: number
+  withToken?: boolean
 }
 
 /**
@@ -33,22 +33,22 @@ interface HttpRequestOptions {
  * @returns 处理后的请求配置
  */
 const requestInterceptor = (url: string, options: HttpRequestOptions) => {
-  const auth = useAuthStore.getState();
+  const auth = useAuthStore.getState()
   const headers = {
     ...defaultConfig.headers,
     ...options.headers,
     ...(options.withToken && auth.accessToken
       ? { Authorization: `Bearer ${auth.accessToken}` }
-      : {}),
-  };
+      : {})
+  }
   console.log(
     `请求：url=${url},options=${JSON.stringify(
       options
     )},headers=${JSON.stringify(headers)} `
-  );
+  )
 
-  return { url, options: { ...options, headers } };
-};
+  return { url, options: { ...options, headers } }
+}
 
 /**
  * 响应拦截器：统一处理响应数据，检查状态码等
@@ -60,11 +60,11 @@ const responseInterceptor = async <T>(
   options: HttpRequestOptions
 ): Promise<T> => {
   if (response.status >= 200 && response.status < 300) {
-    console.log("响应response：", response);
-    const data: HttpResponse<T> = await response.json();
-    return Promise.resolve(data.data);
+    console.log('响应response：', response)
+    const data: HttpResponse<T> = await response.json()
+    return Promise.resolve(data.data)
   } else {
-    const errorData: HttpResponse<T> = await response.json();
+    const errorData: HttpResponse<T> = await response.json()
     if (
       options.withToken &&
       response.status === 401 &&
@@ -74,53 +74,53 @@ const responseInterceptor = async <T>(
         ...options,
         headers: {
           ...options.headers,
-          Authorization: `Bearer ${useAuthStore.getState().refreshToken}`,
-        },
-      };
+          Authorization: `Bearer ${useAuthStore.getState().refreshToken}`
+        }
+      }
       const retryResponse = await fetch(response.url, {
         method: options.method,
         headers: new Headers(retryOptions.headers),
-        body: options.data ? JSON.stringify(options.data) : undefined,
-      });
-      return responseInterceptor(retryResponse, options);
+        body: options.data ? JSON.stringify(options.data) : undefined
+      })
+      return responseInterceptor(retryResponse, options)
     }
-    return Promise.reject(errorData.data);
+    return Promise.reject(errorData.data)
   }
-};
+}
 
 async function request<T = any>(
   api: string,
   options: HttpRequestOptions = {}
 ): Promise<HttpResponse<T>> {
-  const { method = "GET", data, timeout = defaultConfig.timeout } = options;
+  const { method = 'GET', data, timeout = defaultConfig.timeout } = options
 
-  const fullUrl = `${defaultConfig.baseURL}${api}`;
+  const fullUrl = `${defaultConfig.baseURL}${api}`
 
-  const { url, options: finalOptions } = requestInterceptor(fullUrl, options);
+  const { url, options: finalOptions } = requestInterceptor(fullUrl, options)
 
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeout);
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeout)
 
   try {
     const response = await fetch(url, {
       method,
       headers: new Headers(finalOptions.headers),
       body: data ? JSON.stringify(data) : undefined,
-      signal: controller.signal,
-    });
+      signal: controller.signal
+    })
 
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutId)
 
-    return responseInterceptor(response, finalOptions);
+    return responseInterceptor(response, finalOptions)
   } catch (error: any) {
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutId)
 
-    if (error.name === "AbortError") {
-      throw new Error("请求超时");
+    if (error.name === 'AbortError') {
+      throw new Error('请求超时')
     }
 
-    console.error("请求错误", error.message || "服务器错误");
-    throw error;
+    console.error('请求错误', error.message || '服务器错误')
+    throw error
   }
 }
 
@@ -132,16 +132,16 @@ const http = {
     api: string,
     params?: Record<string, any>,
     options?: HttpRequestOptions
-  ) => request<T>(api, { method: "GET", params, ...options }),
+  ) => request<T>(api, { method: 'GET', params, ...options }),
 
   post: <T = any>(api: string, data?: any, options?: HttpRequestOptions) =>
-    request<T>(api, { method: "POST", data, ...options }),
+    request<T>(api, { method: 'POST', data, ...options }),
 
   put: <T = any>(api: string, data?: any, options?: HttpRequestOptions) =>
-    request<T>(api, { method: "PUT", data, ...options }),
+    request<T>(api, { method: 'PUT', data, ...options }),
 
   delete: <T = any>(api: string, data?: any, options?: HttpRequestOptions) =>
-    request<T>(api, { method: "DELETE", data, ...options }),
-};
+    request<T>(api, { method: 'DELETE', data, ...options })
+}
 
-export default http;
+export default http

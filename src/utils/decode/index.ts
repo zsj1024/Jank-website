@@ -4,9 +4,9 @@
  * @returns 解码后的字符串
  */
 function decodeHtml(html: string): string {
-    const txt = document.createElement("textarea");
-    txt.innerHTML = html;
-    return txt.value;
+  const txt = document.createElement('textarea')
+  txt.innerHTML = html
+  return txt.value
 }
 
 /**
@@ -15,12 +15,12 @@ function decodeHtml(html: string): string {
  * @returns 解码后的 URL 字符串
  */
 function decodeUrl(encodedUrl: string): string {
-    try {
-        return decodeURIComponent(encodedUrl);
-    } catch (e) {
-        console.error("URL 解码失败", e);
-        return encodedUrl;
-    }
+  try {
+    return decodeURIComponent(encodedUrl)
+  } catch (e) {
+    console.error('URL 解码失败', e)
+    return encodedUrl
+  }
 }
 
 /**
@@ -29,12 +29,12 @@ function decodeUrl(encodedUrl: string): string {
  * @returns 解析后的对象
  */
 function decodeJson(jsonString: string): unknown {
-    try {
-        return JSON.parse(jsonString);
-    } catch (e) {
-        console.error("JSON 解码失败", e);
-        return null;
-    }
+  try {
+    return JSON.parse(jsonString)
+  } catch (e) {
+    console.error('JSON 解码失败', e)
+    return null
+  }
 }
 
 /**
@@ -43,12 +43,12 @@ function decodeJson(jsonString: string): unknown {
  * @returns 解码后的字符串
  */
 function decodeBase64(base64String: string): string {
-    try {
-        return atob(base64String);
-    } catch (e) {
-        console.error("Base64 解码失败", e);
-        return base64String;
-    }
+  try {
+    return atob(base64String)
+  } catch (e) {
+    console.error('Base64 解码失败', e)
+    return base64String
+  }
 }
 
 /**
@@ -57,13 +57,13 @@ function decodeBase64(base64String: string): string {
  * @returns 解析后的 XML 对象
  */
 function decodeXml(xmlString: string): Document {
-    try {
-        const parser = new DOMParser();
-        return parser.parseFromString(xmlString, "application/xml");
-    } catch (e) {
-        console.error("XML 解码失败", e);
-        return new DOMParser().parseFromString("<error></error>", "application/xml");
-    }
+  try {
+    const parser = new DOMParser()
+    return parser.parseFromString(xmlString, 'application/xml')
+  } catch (e) {
+    console.error('XML 解码失败', e)
+    return new DOMParser().parseFromString('<error></error>', 'application/xml')
+  }
 }
 
 /**
@@ -72,17 +72,17 @@ function decodeXml(xmlString: string): Document {
  * @returns 解码后的字符串
  */
 function decodeHtmlEntities(html: string): string {
-    const txt = document.createElement("textarea");
-    txt.innerHTML = html;
-    return txt.value;
+  const txt = document.createElement('textarea')
+  txt.innerHTML = html
+  return txt.value
 }
 
 // 统一导出所有解码工具函数
 export const decodeUtils = {
-    decodeHtml,
-    decodeUrl,
-    decodeJson,
-    decodeBase64,
-    decodeXml,
-    decodeHtmlEntities,
-};
+  decodeHtml,
+  decodeUrl,
+  decodeJson,
+  decodeBase64,
+  decodeXml,
+  decodeHtmlEntities
+}
