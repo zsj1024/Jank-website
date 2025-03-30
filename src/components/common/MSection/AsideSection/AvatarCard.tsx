@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import type { AvatarCardProps } from "@/types";
 
 const AvatarCard: React.FC<AvatarCardProps> = ({
   avatarUrl,
@@ -54,12 +53,8 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
       {/* Info Section */}
       <div className="mt-auto flex justify-between items-center">
         <div>
-          <h3 className="text-sm font-medium text-card-foreground">
-            {name}
-          </h3>
-          <p className="text-xs text-card-foreground/60 truncate">
-            {title}
-          </p>
+          <h3 className="text-sm font-medium text-card-foreground">{name}</h3>
+          <p className="text-xs text-card-foreground/60 truncate">{title}</p>
         </div>
         <div className="flex space-x-1">
           {socials.map((social, i) => (

@@ -4,7 +4,8 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_SITE_NAME: 'Jank',
     NEXT_PUBLIC_SITE_URL: 'http://127.0.0.1:9010',
-    NEXT_PUBLIC_API_URL: 'http://127.0.0.1:9010/api',
+    NEXT_PUBLIC_API_URL: 'https://fenderisfine.icu/api',
+    // NEXT_PUBLIC_API_URL: 'http://127.0.0.1:9010/api',
   },
   async rewrites() {
     return [

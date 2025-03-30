@@ -11,7 +11,6 @@ import { Card, CardContent, Skeleton } from "@/components/ui/shadcn";
 import { PaginationComponent } from "@/components/common/MSection/PaginationSection/Pagination";
 import { useRouter } from "next/navigation";
 import parse from "html-react-parser";
-import type { HttpResponse, Post } from "@/types";
 
 type ArticleListProps = {
   posts: HttpResponse<Post>[];

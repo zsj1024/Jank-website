@@ -3,7 +3,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { ArticleList } from "@/components/common/MSection/ArticleSection/ArticleList";
 import { fetchPostList } from "@/api/post";
-import type { Post } from "@/types/Post";
 import { decodeUtils } from "@/utils";
 
 const ITEMS_PER_PAGE = 5;

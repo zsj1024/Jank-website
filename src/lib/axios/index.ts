@@ -1,4 +1,3 @@
-import type { HttpResponse } from '@/types/HttpType';
 import { useAuthStore } from "@/store/auth";
 
 /**
@@ -11,7 +10,7 @@ const defaultConfig = {
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 5000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 };
 
@@ -19,7 +18,7 @@ const defaultConfig = {
  * 请求配置接口
  */
 interface HttpRequestOptions {
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  method?: "GET" | "POST" | "PUT" | "DELETE";
   data?: any;
   params?: Record<string, any> | string[][] | URLSearchParams;
   headers?: Record<string, string>;
@@ -38,7 +37,9 @@ const requestInterceptor = (url: string, options: HttpRequestOptions) => {
   const headers = {
     ...defaultConfig.headers,
     ...options.headers,
-    ...(options.withToken && auth.accessToken ? { 'Authorization': `Bearer ${auth.accessToken}` } : {})
+    ...(options.withToken && auth.accessToken
+      ? { Authorization: `Bearer ${auth.accessToken}` }
+      : {}),
   };
 
   return { url, options: { ...options, headers } };
@@ -49,19 +50,26 @@ const requestInterceptor = (url: string, options: HttpRequestOptions) => {
  * @param response 响应数据
  * @returns 处理后的响应数据
  */
-const responseInterceptor = async <T>(response: Response, options: HttpRequestOptions): Promise<HttpResponse<T>> => {
+const responseInterceptor = async <T>(
+  response: Response,
+  options: HttpRequestOptions
+): Promise<HttpResponse<T>> => {
   if (response.status >= 200 && response.status < 300) {
     const data: HttpResponse<T> = await response.json();
     return Promise.resolve(data);
   } else {
     const errorData: HttpResponse<T> = await response.json();
-    if (options.withToken && response.status === 401 && useAuthStore.getState().refreshToken) {
+    if (
+      options.withToken &&
+      response.status === 401 &&
+      useAuthStore.getState().refreshToken
+    ) {
       const retryOptions = {
         ...options,
         headers: {
           ...options.headers,
-          'Authorization': `Bearer ${useAuthStore.getState().refreshToken}`
-        }
+          Authorization: `Bearer ${useAuthStore.getState().refreshToken}`,
+        },
       };
       const retryResponse = await fetch(response.url, {
         method: options.method,
@@ -78,7 +86,7 @@ async function request<T = any>(
   api: string,
   options: HttpRequestOptions = {}
 ): Promise<HttpResponse<T>> {
-  const { method = 'GET', data, timeout = defaultConfig.timeout } = options;
+  const { method = "GET", data, timeout = defaultConfig.timeout } = options;
 
   const fullUrl = `${defaultConfig.baseURL}${api}`;
 
@@ -101,11 +109,11 @@ async function request<T = any>(
   } catch (error: any) {
     clearTimeout(timeoutId);
 
-    if (error.name === 'AbortError') {
-      throw new Error('请求超时');
+    if (error.name === "AbortError") {
+      throw new Error("请求超时");
     }
 
-    console.error('请求错误', error.message || '服务器错误');
+    console.error("请求错误", error.message || "服务器错误");
     throw error;
   }
 }
@@ -114,17 +122,20 @@ async function request<T = any>(
  * API 请求实例，封装 GET、POST、PUT、DELETE 请求方法
  */
 const http = {
-  get: <T = any>(api: string, params?: Record<string, any>, options?: HttpRequestOptions) =>
-    request<T>(api, { method: 'GET', params, ...options }),
+  get: <T = any>(
+    api: string,
+    params?: Record<string, any>,
+    options?: HttpRequestOptions
+  ) => request<T>(api, { method: "GET", params, ...options }),
 
   post: <T = any>(api: string, data?: any, options?: HttpRequestOptions) =>
-    request<T>(api, { method: 'POST', data, ...options }),
+    request<T>(api, { method: "POST", data, ...options }),
 
   put: <T = any>(api: string, data?: any, options?: HttpRequestOptions) =>
-    request<T>(api, { method: 'PUT', data, ...options }),
+    request<T>(api, { method: "PUT", data, ...options }),
 
   delete: <T = any>(api: string, data?: any, options?: HttpRequestOptions) =>
-    request<T>(api, { method: 'DELETE', data, ...options }),
+    request<T>(api, { method: "DELETE", data, ...options }),
 };
 
 export default http;

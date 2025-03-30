@@ -22,7 +22,6 @@ import {
   fetchVerificationCode,
   sendVerificationCode,
 } from "@/api/verification";
-import type { LoginFormData, RegisterFormData } from "@/types";
 import { useAuthStore } from "@/store/auth";
 
 // 验证码按钮组件

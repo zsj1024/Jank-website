@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/shadcn/card";
 import { fetchOnePost, updateOnePost } from "@/api/post";
 import { getCategoryTree } from "@/api/category";
-import type { Post } from "@/types/Post";
 
 interface EditPostPageProps {
   params: {

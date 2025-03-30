@@ -20,7 +20,6 @@ import {
 import { Menu } from "lucide-react";
 import { ThemeProvider, ModeToggle } from "@/components/ui/shadcn";
 import Auth from "@/components/common/Auth/Auth";
-import type { MenuItem } from "@/types";
 import React from "react";
 import { useAuthStore } from "@/store/auth";
 

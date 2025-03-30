@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/shadcn/button";
 import { Plus, Edit, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import { fetchPostList, deleteOnePost } from "@/api/post";
-import type { Post } from "@/types/Post";
 import {
   Pagination,
   PaginationContent,
@@ -157,16 +156,16 @@ export default function PostsPage() {
           <PaginationContent>
             {currentPage > 1 && (
               <PaginationItem>
-                <PaginationPrevious 
-                  href="#" 
+                <PaginationPrevious
+                  href="#"
                   onClick={(e) => {
                     e.preventDefault();
                     handlePageChange(currentPage - 1);
-                  }} 
+                  }}
                 />
               </PaginationItem>
             )}
-            
+
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
               <PaginationItem key={page}>
                 <PaginationLink
@@ -181,15 +180,15 @@ export default function PostsPage() {
                 </PaginationLink>
               </PaginationItem>
             ))}
-            
+
             {currentPage < totalPages && (
               <PaginationItem>
-                <PaginationNext 
-                  href="#" 
+                <PaginationNext
+                  href="#"
                   onClick={(e) => {
                     e.preventDefault();
                     handlePageChange(currentPage + 1);
-                  }} 
+                  }}
                 />
               </PaginationItem>
             )}
