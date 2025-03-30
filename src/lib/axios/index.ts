@@ -41,6 +41,11 @@ const requestInterceptor = (url: string, options: HttpRequestOptions) => {
       ? { Authorization: `Bearer ${auth.accessToken}` }
       : {}),
   };
+  console.log(
+    `请求：url=${url},options=${JSON.stringify(
+      options
+    )},headers=${JSON.stringify(headers)} `
+  );
 
   return { url, options: { ...options, headers } };
 };
@@ -53,10 +58,11 @@ const requestInterceptor = (url: string, options: HttpRequestOptions) => {
 const responseInterceptor = async <T>(
   response: Response,
   options: HttpRequestOptions
-): Promise<HttpResponse<T>> => {
+): Promise<T> => {
   if (response.status >= 200 && response.status < 300) {
+    console.log("响应response：", response);
     const data: HttpResponse<T> = await response.json();
-    return Promise.resolve(data);
+    return Promise.resolve(data.data);
   } else {
     const errorData: HttpResponse<T> = await response.json();
     if (
@@ -78,7 +84,7 @@ const responseInterceptor = async <T>(
       });
       return responseInterceptor(retryResponse, options);
     }
-    return Promise.reject(errorData);
+    return Promise.reject(errorData.data);
   }
 };
 

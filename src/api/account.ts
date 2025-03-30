@@ -5,7 +5,7 @@ export const loginAccount = (data: {
   email: string;
   password: string;
   img_verification_code: string;
-}): Promise<HttpResponse<LoginAccountResponse>> =>
+}): Promise<LoginAccountResponse> =>
   http.post("/v1/account/loginAccount", data);
 
 /** 注册账号 */
@@ -16,7 +16,7 @@ export const registerAccount = (data: {
   phone?: string;
   email_verification_code: string;
   img_verification_code: string;
-}): Promise<HttpResponse<any>> =>
+}): Promise<RegisterAccountResponse> =>
   http.post("/v1/account/registerAccount", data);
 
 /** 获取账号信息 */

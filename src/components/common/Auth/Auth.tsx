@@ -103,7 +103,8 @@ const Auth: FC = () => {
 
       setEmailCodeSending(true);
       try {
-        await sendVerificationCode(email);
+        const response = await sendVerificationCode(email);
+        console.log(response, "response");
         setCountdown(60);
         alert("验证码已发送，请查收邮箱");
       } catch (error) {
@@ -121,20 +122,18 @@ const Auth: FC = () => {
     async (data: LoginFormData) => {
       try {
         const response = await loginAccount(data);
-        if (response.data) {
-          setAuthState("none");
-          useAuthStore.getState().setAuth({
-            accessToken: response.data.access_token || "",
-            refreshToken: response.data.refresh_token || "",
-          });
-          // 获取用户信息
-          const accountInfo = await getAccount(data.email);
-          useAuthStore.getState().setUserInfo(accountInfo.data);
-          alert("登录成功，即将跳转到管理页面");
-          setTimeout(() => {
-            window.location.href = "/console";
-          }, 1000);
-        }
+        setAuthState("none");
+        useAuthStore.getState().setAuth({
+          accessToken: response.data.access_token || "",
+          refreshToken: response.data.refresh_token || "",
+        });
+        // 获取用户信息
+        const accountInfo = await getAccount(data.email);
+        useAuthStore.getState().setUserInfo(accountInfo.data);
+        alert("登录成功，即将跳转到管理页面");
+        setTimeout(() => {
+          window.location.href = "/console";
+        }, 1000);
       } catch (error) {
         console.error("登录失败", error);
         alert("登录失败，请检查输入信息");
@@ -149,10 +148,9 @@ const Auth: FC = () => {
     async (data: RegisterFormData) => {
       try {
         const response = await registerAccount(data);
-        if (response.data) {
-          setAuthState("login");
-          alert("注册成功，请登录");
-        }
+        console.log(response, "response");
+        setAuthState("login");
+        alert("注册成功，请登录");
       } catch (error) {
         console.error("注册失败", error);
         alert("注册失败，请检查输入信息");

@@ -32,3 +32,13 @@ declare interface LoginAccountResponse {
   requestId: string;
   timeStamp: number;
 }
+
+/** 注册账号响应field */
+declare interface RegisterAccountResponse {
+  data: {
+    nickname: string;
+    email: string;
+  };
+  requestId: string;
+  timeStamp: number;
+}
