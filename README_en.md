@@ -62,6 +62,7 @@ src/
 │   │   └── posts/          # Article pages
 │   └── console/            # Admin panel routes
 ├── components/             # Components directory
+│   ├── custom/             # Custom components
 │   ├── layout/             # Layout components
 │   └── ui/                 # UI components
 │       └── shadcn/         # Shadcn UI components

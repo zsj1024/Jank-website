@@ -5,8 +5,15 @@
  */
 'use client'
 
-import { useTheme } from './themeContext'
+import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
+
 import { ThemeToggleProps } from './themeTypes'
+
+// 基本样式
+const baseButtonStyles =
+  'flex items-center justify-center transition-colors hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0'
+const iconWrapperStyles = 'h-5 w-5'
 
 /**
  * 主题切换按钮组件
@@ -18,24 +25,22 @@ export function ThemeToggle({
   showLabel = false,
   size = 'md'
 }: ThemeToggleProps) {
-  const { isDark, setTheme } = useTheme()
+  const { setTheme, theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
 
   // 计算按钮大小样式
   const sizeClasses = {
     lg: 'h-12 px-4',
-    md: 'h-10 px-3',
+    md: 'h-9 w-9 p-0',
     sm: 'h-8 px-2'
-  }
-
-  // 切换主题
-  const toggleTheme = (): void => {
-    setTheme(isDark ? 'light' : 'dark')
   }
 
   // 默认图标
   const defaultLightIcon = (
     <svg
-      className='w-5 h-5'
+      className={iconWrapperStyles}
       fill='none'
       stroke='currentColor'
       strokeLinecap='round'
@@ -50,7 +55,7 @@ export function ThemeToggle({
 
   const defaultDarkIcon = (
     <svg
-      className='w-5 h-5'
+      className={iconWrapperStyles}
       fill='none'
       stroke='currentColor'
       strokeLinecap='round'
@@ -63,17 +68,37 @@ export function ThemeToggle({
     </svg>
   )
 
+  if (!mounted) {
+    return (
+      <button
+        aria-label='切换主题'
+        className={`${baseButtonStyles} ${sizeClasses[size]} ${className}`}
+        type='button'
+      >
+        <div className={`${iconWrapperStyles} bg-transparent`} />
+        {showLabel && <span className='ml-2 opacity-0'>加载中</span>}
+      </button>
+    )
+  }
+
   return (
     <button
-      aria-label={`切换到${isDark ? '亮色' : '暗色'}模式`}
-      className={`flex items-center justify-center rounded-md transition-colors hover:bg-accent focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${sizeClasses[size]} ${className}`}
-      onClick={toggleTheme}
+      aria-label='切换主题'
+      className={`${baseButtonStyles} ${sizeClasses[size]} ${className}`}
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      suppressHydrationWarning
       type='button'
     >
-      {isDark ? lightIcon || defaultLightIcon : darkIcon || defaultDarkIcon}
+      <div className={iconWrapperStyles}>
+        {theme === 'dark'
+          ? lightIcon || defaultLightIcon
+          : darkIcon || defaultDarkIcon}
+      </div>
 
       {showLabel && (
-        <span className='ml-2'>{isDark ? '亮色模式' : '暗色模式'}</span>
+        <span className='ml-2' suppressHydrationWarning>
+          {theme === 'dark' ? '亮色模式' : '暗色模式'}
+        </span>
       )}
     </button>
   )

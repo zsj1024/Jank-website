@@ -14,12 +14,22 @@ import { memo, useCallback } from 'react'
 
 const STYLES = {
   button: {
-    base: 'rounded-full px-6 py-5 sm:px-8 sm:py-6 transition-all duration-300 hover:translate-y-[-2px] group',
+    base: 'rounded-full px-6 py-5 sm:px-8 sm:py-6 transition-transform duration-300 hover:translate-y-[-2px] group',
     outline: 'hover:bg-background/80 hover:border-primary/40 hover:shadow-sm',
     primary: 'hover:shadow-md hover:shadow-primary/10'
   },
+  card: {
+    base: 'border-border/40 bg-background/90 backdrop-blur-sm transition-transform duration-300 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5 hover:translate-y-[-6px] h-full',
+    content: 'p-6 sm:p-8 flex flex-col items-center text-center h-full',
+    icon: 'w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center mb-4 sm:mb-6 transition-transform duration-300 hover:scale-110 hover:bg-primary/20'
+  },
   container: 'container px-4 mx-auto',
-  section: 'py-16 sm:py-20 md:py-24'
+  section: 'py-16 sm:py-20 md:py-24',
+  tech: {
+    base: 'text-center p-4 sm:p-5 rounded-xl border border-transparent transition-transform duration-300 hover:bg-muted/20 hover:shadow-md hover:shadow-primary/5 hover:border-border/30 hover:-translate-y-1 h-full',
+    desc: 'text-xs sm:text-sm text-muted-foreground',
+    title: 'text-lg sm:text-2xl md:text-3xl font-bold text-primary mb-1 sm:mb-2'
+  }
 }
 
 const CONTENT = {
@@ -81,11 +91,9 @@ const SectionTitle = memo(function SectionTitle({
 // 特性卡片组件
 const FeatureCard = memo(function FeatureCard({ feature }: { feature: any }) {
   return (
-    <Card className='border-border/40 bg-background/90 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5 hover:translate-y-[-6px] group'>
-      <CardContent className='p-6 sm:p-8 flex flex-col items-center text-center'>
-        <div className='w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center mb-4 sm:mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary/20'>
-          {feature.icon}
-        </div>
+    <Card className={STYLES.card.base}>
+      <CardContent className={STYLES.card.content}>
+        <div className={STYLES.card.icon}>{feature.icon}</div>
         <h3 className='text-lg sm:text-xl font-semibold mb-2 sm:mb-3'>
           {feature.title}
         </h3>
@@ -100,13 +108,9 @@ const FeatureCard = memo(function FeatureCard({ feature }: { feature: any }) {
 // 技术栈项组件
 const TechItem = memo(function TechItem({ tech }: { tech: any }) {
   return (
-    <div className='text-center p-3 sm:p-5 rounded-xl border border-transparent transition-all duration-300 hover:bg-muted/20 hover:shadow-md hover:shadow-primary/5 hover:border-border/30 transform hover:-translate-y-1'>
-      <div className='text-lg sm:text-2xl md:text-3xl font-bold text-primary mb-1 sm:mb-2'>
-        {tech.label}
-      </div>
-      <div className='text-xs sm:text-sm text-muted-foreground'>
-        {tech.value}
-      </div>
+    <div className={STYLES.tech.base}>
+      <div className={STYLES.tech.title}>{tech.label}</div>
+      <div className={STYLES.tech.desc}>{tech.value}</div>
     </div>
   )
 })
@@ -166,7 +170,7 @@ export default function Home() {
           <div className='max-w-6xl mx-auto'>
             <div className='flex flex-col md:flex-row items-center gap-8 md:gap-12'>
               {/* 左侧内容 */}
-              <div className='w-full md:w-2/5 space-y-5 text-center md:text-left scroll-animate delay-100'>
+              <div className='w-full md:w-2/5 space-y-5 text-center md:text-left scroll-animate'>
                 <div className='inline-block px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium'>
                   {CONTENT.hero.badge}
                 </div>
@@ -203,8 +207,8 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 右侧图片 - 优化图片显示方式 */}
-              <div className='w-full md:w-3/5 relative mt-8 md:mt-0 scroll-animate delay-200'>
+              {/* 右侧图片 */}
+              <div className='w-full md:w-3/5 relative mt-8 md:mt-0 scroll-animate'>
                 <div className='absolute inset-0 bg-gradient-radial from-primary/30 via-primary/10 to-transparent opacity-60 rounded-full blur-3xl -z-10 animate-pulse-slow dark:from-primary/20 dark:via-primary/5'></div>
                 <div className='rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border-2 border-gray-500/60 bg-background/80 transform transition-all duration-500 shadow-gray-600/60 dark:shadow-primary/30 dark:border-primary/40 hover:shadow-2xl hover:shadow-gray-600/70 dark:hover:shadow-primary/40'>
                   <div className='relative w-full h-0 pb-[56.25%]'>
@@ -226,7 +230,7 @@ export default function Home() {
 
       {/* Features Section */}
       <section
-        className={`${STYLES.section} bg-muted/10 scroll-animate delay-100`}
+        className={`${STYLES.section} bg-muted/10 scroll-animate`}
         id='features'
       >
         <div className={STYLES.container}>
@@ -241,7 +245,7 @@ export default function Home() {
               <div
                 className='scroll-animate'
                 key={index}
-                style={{ animationDelay: `${(index + 3) * 100}ms` }}
+                style={{ animationDelay: `${(index + 2) * 100}ms` }}
               >
                 <FeatureCard feature={feature} />
               </div>
@@ -252,7 +256,7 @@ export default function Home() {
 
       {/* Tech Stack Section */}
       <section
-        className={`${STYLES.section} relative overflow-hidden scroll-animate delay-200`}
+        className={`${STYLES.section} relative overflow-hidden scroll-animate`}
         id='tech'
       >
         <div className='absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-radial from-primary/5 to-transparent opacity-60 blur-3xl -z-10'></div>
@@ -270,7 +274,7 @@ export default function Home() {
               <div
                 className='scroll-animate'
                 key={index}
-                style={{ animationDelay: `${(index + 3) * 100}ms` }}
+                style={{ animationDelay: `${(index + 2) * 100}ms` }}
               >
                 <TechItem tech={tech} />
               </div>
@@ -280,21 +284,16 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section
-        className={`${STYLES.section} bg-muted/10 scroll-animate delay-300`}
-      >
+      <section className={`${STYLES.section} bg-muted/10 scroll-animate`}>
         <div className={STYLES.container}>
           <div className='max-w-3xl mx-auto text-center'>
-            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 scroll-animate delay-400'>
+            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 scroll-animate'>
               {CONTENT.cta.title}
             </h2>
-            <p className='text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto scroll-animate delay-500'>
+            <p className='text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto scroll-animate'>
               {CONTENT.cta.description}
             </p>
-            <div
-              className='flex flex-wrap justify-center gap-4 sm:gap-6 scroll-animate'
-              style={{ animationDelay: '600ms' }}
-            >
+            <div className='flex flex-wrap justify-center gap-4 sm:gap-6 scroll-animate'>
               <Button
                 className={`${STYLES.button.base} ${STYLES.button.primary}`}
                 onClick={openGitHub}

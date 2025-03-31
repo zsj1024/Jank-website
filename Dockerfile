@@ -1,5 +1,5 @@
 # 第一阶段：构建
-FROM node:20.18.2 AS builder
+FROM node:22.13.1 AS builder
 WORKDIR /app
 
 # 复制依赖文件
@@ -16,7 +16,7 @@ ENV NODE_ENV production
 RUN pnpm run build
 
 # 第二阶段：运行
-FROM node:20.18.2-slim
+FROM node:22.13.1-slim
 WORKDIR /app
 
 # 复制依赖文件和构建产物

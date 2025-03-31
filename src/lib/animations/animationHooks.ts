@@ -14,7 +14,6 @@ import { AnimationOptions } from './animationTypes'
 
 /**
  * React动画Hook
- * 为React组件提供动画系统的简便使用方式
  *
  * @param options - 动画系统配置选项
  * @returns 包含animateElement方法的对象，可用于手动触发动画

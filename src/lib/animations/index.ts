@@ -5,6 +5,9 @@
  * 为应用程序提供一致的动画API
  */
 
+// 导入核心动画样式
+import './animations.css'
+
 // 导出常用动画组件
 export { Animate } from './Animate'
 

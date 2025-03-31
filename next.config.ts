@@ -23,14 +23,15 @@ const nextConfig: NextConfig = {
     }
   },
   async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: `${
-          process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:9010/api'
-        }/:path*`
-      }
-    ]
+    if (process.env.NEXT_PUBLIC_API_URL) {
+      return [
+        {
+          source: '/api/:path*',
+          destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`
+        }
+      ]
+    }
+    return []
   },
   typescript: { ignoreBuildErrors: true }
 }

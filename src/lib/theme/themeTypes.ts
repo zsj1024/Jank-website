@@ -39,14 +39,28 @@ export interface ThemeProviderProps {
  * 主题切换按钮属性
  */
 export interface ThemeToggleProps {
-  /** 自定义类名 */
+  /**
+   * 自定义类名
+   */
   className?: string
-  /** 自定义暗色模式图标 */
+
+  /**
+   * 自定义暗色模式图标
+   */
   darkIcon?: React.ReactNode
-  /** 自定义亮色模式图标 */
+
+  /**
+   * 自定义亮色模式图标
+   */
   lightIcon?: React.ReactNode
-  /** 显示标签文本 */
+
+  /**
+   * 是否显示文字标签
+   */
   showLabel?: boolean
-  /** 按钮大小 */
+
+  /**
+   * 按钮大小
+   */
   size?: 'lg' | 'md' | 'sm'
 }

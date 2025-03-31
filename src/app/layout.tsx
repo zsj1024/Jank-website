@@ -1,27 +1,26 @@
-import '@/styles/globals.css'
 import { MainFooter } from '@/components/layout/Footer'
-import { siteConfig } from '@/config/site.config'
-import { createMetadata, OptimizedResources } from '@/lib/seo'
+import { OptimizedResources } from '@/lib/seo'
+import { cn } from '@/lib/utils'
 import { Providers } from '@/providers'
+import '@/styles/globals.css'
+import { Inter } from 'next/font/google'
 
-export const metadata = createMetadata({
-  description: siteConfig.description
-})
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
   children
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang={siteConfig.language} suppressHydrationWarning>
+    <html lang='zh-CN' suppressHydrationWarning>
       <head>
         <OptimizedResources />
       </head>
-      <body className={`antialiased ${siteConfig.fonts?.main.className || ''}`}>
+      <body className={cn(inter.className, 'min-h-screen bg-background')}>
         <Providers>
           <div className='flex flex-col min-h-screen md:px-[12.6%]'>
-            <main className='flex-1'>{children}</main>
+            <div className='pt-14'>{children}</div>
             <MainFooter />
           </div>
         </Providers>

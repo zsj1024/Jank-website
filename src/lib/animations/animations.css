@@ -1,0 +1,91 @@
+/**
+ * 动画系统核心样式
+ * 
+ * 包含所有与滚动动画相关的CSS类和动画定义
+ */
+
+/* 基础样式 - 动画前的初始状态 */
+.scroll-animate {
+  opacity: 0;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* 动画激活样式 */
+.animate-in {
+  animation: slideUpFade 0.6s cubic-bezier(0.2, 0, 0.15, 1) forwards;
+}
+
+/* 动画关键帧 */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 固定延迟类 */
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+
+/* 动态延迟类 */
+.delay-anim-1 {
+  animation-delay: 30ms;
+}
+.delay-anim-2 {
+  animation-delay: 70ms;
+}
+.delay-anim-3 {
+  animation-delay: 110ms;
+}
+.delay-anim-4 {
+  animation-delay: 150ms;
+}
+.delay-anim-5 {
+  animation-delay: 190ms;
+}
+
+/* 无障碍  */
+.reduce-motion .scroll-animate {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  will-change: auto !important;
+}
+
+/* 移动设备优化 */
+@media (max-width: 768px) {
+  .animate-in {
+    animation-duration: 0.4s;
+  }
+
+  @keyframes slideUpFade {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

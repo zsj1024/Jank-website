@@ -121,7 +121,7 @@ export const siteConfig: SiteConfig = {
   },
 
   // 核心站点标识
-  name: 'Jank 博客系统',
+  name: 'Jank',
 
   // 性能优化配置
   performance: {

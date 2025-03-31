@@ -2,21 +2,6 @@
  * 前台导航配置
  */
 export const frontendNavigation = {
-  footerNav: [
-    { icon: 'book-open', key: 'docs', link: '/docs', title: '文档' },
-    {
-      external: true,
-      icon: 'github',
-      key: 'github',
-      link: 'https://github.com/Done-0',
-      title: 'GitHub'
-    },
-    { icon: 'info', key: 'about', link: '/about', title: '关于' },
-    { icon: 'mail', key: 'contact', link: '/contact', title: '联系' },
-    { icon: 'shield', key: 'privacy', link: '/privacy', title: '隐私政策' },
-    { icon: 'file', key: 'terms', link: '/terms', title: '使用条款' }
-  ] as MenuItem[],
-
   mainNav: [
     {
       icon: 'home',
@@ -25,13 +10,13 @@ export const frontendNavigation = {
       title: '首页'
     },
     {
-      icon: 'file-text',
-      key: 'blog',
-      link: '/blog',
+      icon: 'posts',
+      key: 'posts',
+      link: '/posts',
       title: '文章'
     },
     {
-      icon: 'info',
+      icon: 'about',
       key: 'about',
       link: '/about',
       title: '关于'
@@ -39,7 +24,7 @@ export const frontendNavigation = {
     {
       icon: 'sponsor',
       key: 'sponsor',
-      link: '/docs',
+      link: '/sponsor',
       title: '赞助'
     }
   ] as MenuItem[]

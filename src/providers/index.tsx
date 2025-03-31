@@ -1,8 +1,7 @@
 'use client'
 
-import { siteConfig } from '@/config/site.config'
-import { AnimationProvider } from '@/lib/animations'
-import { ThemeMode, ThemeProvider } from '@/lib/theme'
+import { AnimationProvider } from '@/providers/AnimationProvider'
+import { ThemeProvider } from '@/providers/ThemeProvider'
 import React from 'react'
 
 /**
@@ -10,8 +9,8 @@ import React from 'react'
  */
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider defaultTheme={siteConfig.defaultTheme as ThemeMode}>
-      <AnimationProvider mode='performance'>{children}</AnimationProvider>
+    <ThemeProvider>
+      <AnimationProvider>{children}</AnimationProvider>
     </ThemeProvider>
   )
 }

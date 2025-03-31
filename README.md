@@ -62,6 +62,7 @@ src/
 │   │   └── posts/          # 文章页面
 │   └── console/            # 后台管理路由组
 ├── components/             # 组件目录
+│   ├── custom/             # 自定义组件
 │   ├── layout/             # 布局组件
 │   └── ui/                 # UI 组件
 │       └── shadcn/         # Shadcn UI 组件
