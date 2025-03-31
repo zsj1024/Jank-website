@@ -1,0 +1,441 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animate";
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-rgb: 33, 33, 33;
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-rgb: 235, 235, 235;
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  pre {
+    @apply p-4 rounded-md bg-zinc-900 text-zinc-100 overflow-x-auto my-3;
+    white-space: pre;
+    max-width: 100%;
+    max-height: 400px;
+  }
+
+  pre code {
+    @apply text-sm font-mono;
+    white-space: pre;
+    display: block;
+    width: max-content;
+    min-width: 100%;
+  }
+
+  pre::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  pre::-webkit-scrollbar-thumb {
+    @apply bg-zinc-600 rounded;
+  }
+
+  pre::-webkit-scrollbar-track {
+    @apply bg-zinc-800 rounded;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@layer components {
+  /* 文章基础样式 */
+  .article-content {
+    @apply text-card-foreground max-w-none;
+  }
+
+  /* 标题样式 */
+  .article-content h1,
+  .article-content h2,
+  .article-content h3,
+  .article-content h4,
+  .article-content h5,
+  .article-content h6 {
+    @apply text-card-foreground font-bold scroll-mt-16 my-4;
+  }
+
+  .article-content h1 {
+    @apply text-2xl md:text-3xl;
+  }
+  .article-content h2 {
+    @apply text-xl md:text-2xl;
+  }
+  .article-content h3 {
+    @apply text-lg md:text-xl;
+  }
+  .article-content h4 {
+    @apply text-base md:text-lg;
+  }
+  .article-content h5 {
+    @apply text-sm md:text-base font-semibold;
+  }
+  .article-content h6 {
+    @apply text-xs md:text-sm font-semibold;
+  }
+
+  /* 段落和链接 */
+  .article-content p {
+    @apply text-card-foreground/90 leading-7 my-3;
+  }
+
+  .article-content a {
+    @apply text-primary underline underline-offset-4 hover:text-primary/80 font-medium;
+  }
+
+  /* 图片 */
+  .article-content img {
+    @apply mx-auto rounded-md my-4 border border-border;
+  }
+
+  /* 代码块 */
+  .article-content pre {
+    @apply my-4 p-4 rounded-md bg-[#18181b] text-zinc-100 overflow-x-auto border border-zinc-800/30;
+    max-width: 100%;
+  }
+
+  .article-content code {
+    @apply font-mono text-sm;
+  }
+
+  .article-content pre code {
+    @apply block p-0 bg-transparent text-zinc-200;
+    white-space: pre;
+    word-break: normal;
+    overflow-wrap: normal;
+  }
+
+  .article-content :not(pre) > code {
+    @apply bg-secondary text-secondary-foreground px-1.5 py-0.5 rounded text-sm font-medium;
+  }
+
+  /* 代码高亮 */
+  .article-content pre .token.comment,
+  .article-content pre .token.prolog,
+  .article-content pre .token.doctype,
+  .article-content pre .token.cdata {
+    @apply text-zinc-500;
+  }
+
+  .article-content pre .token.punctuation {
+    @apply text-zinc-400;
+  }
+
+  .article-content pre .token.property,
+  .article-content pre .token.tag,
+  .article-content pre .token.boolean,
+  .article-content pre .token.number,
+  .article-content pre .token.constant,
+  .article-content pre .token.symbol {
+    @apply text-amber-500;
+  }
+
+  .article-content pre .token.selector,
+  .article-content pre .token.attr-name,
+  .article-content pre .token.string,
+  .article-content pre .token.char,
+  .article-content pre .token.builtin {
+    @apply text-emerald-400;
+  }
+
+  .article-content pre .token.operator,
+  .article-content pre .token.entity,
+  .article-content pre .token.url,
+  .article-content pre .language-css .token.string,
+  .article-content pre .style .token.string {
+    @apply text-zinc-200;
+  }
+
+  .article-content pre .token.atrule,
+  .article-content pre .token.attr-value,
+  .article-content pre .token.keyword {
+    @apply text-sky-400;
+  }
+
+  .article-content pre .token.function,
+  .article-content pre .token.class-name {
+    @apply text-violet-400;
+  }
+
+  .article-content pre .token.regex,
+  .article-content pre .token.important,
+  .article-content pre .token.variable {
+    @apply text-rose-400;
+  }
+
+  /* 引用块 */
+  .article-content blockquote {
+    @apply border-l-4 border-primary/20 pl-4 italic text-card-foreground/80 my-4 py-1 bg-primary/5 rounded-r-md;
+  }
+
+  /* 列表 */
+  .article-content ul,
+  .article-content ol {
+    @apply text-card-foreground/90 my-3 ml-6;
+  }
+
+  .article-content ul {
+    @apply list-disc;
+  }
+  .article-content ol {
+    @apply list-decimal;
+  }
+  .article-content li {
+    @apply my-1.5;
+  }
+
+  /* 分割线 */
+  .article-content hr {
+    @apply my-6 border-border;
+  }
+
+  /* 表格 */
+  .article-content table {
+    @apply w-full border-collapse text-sm my-4 border border-border rounded-md overflow-hidden;
+  }
+
+  .article-content th {
+    @apply p-2.5 text-left font-bold bg-muted text-muted-foreground;
+  }
+
+  .article-content td {
+    @apply p-2.5 border-t border-border;
+  }
+
+  /* 目录组件样式 */
+  .toc-container {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  .toc-container ul {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  .dark .toc-container a.border-primary {
+    @apply border-primary text-primary;
+  }
+
+  .toc-container a.border-primary {
+    @apply border-primary text-primary;
+  }
+
+  .toc-container [data-heading-id] {
+    @apply cursor-pointer;
+  }
+
+  .non-toc {
+    @apply relative;
+  }
+
+  /* 提示框 */
+  .article-content .callout {
+    @apply bg-muted p-4 rounded-md border border-border my-4;
+  }
+}
+
+/* 高性能动画系统 */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.animate-in {
+  animation: slideUpFade 0.6s cubic-bezier(0.2, 0, 0.15, 1) forwards;
+}
+
+@keyframes slideUpFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 延迟类 */
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+
+/* 性能优化的延迟类 */
+.delay-anim-1 {
+  animation-delay: 30ms;
+}
+.delay-anim-2 {
+  animation-delay: 70ms;
+}
+.delay-anim-3 {
+  animation-delay: 110ms;
+}
+.delay-anim-4 {
+  animation-delay: 150ms;
+}
+.delay-anim-5 {
+  animation-delay: 190ms;
+}
+
+/* 减少动画模式 */
+.reduce-motion .scroll-animate {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  will-change: auto !important;
+}
+
+/* 移动设备优化 */
+@media (max-width: 768px) {
+  .animate-in {
+    animation-duration: 0.4s;
+  }
+
+  .scroll-animate {
+    transform: translateY(10px);
+  }
+}

@@ -1,0 +1,46 @@
+# 构建产物
+.next/
+out/
+build/
+dist/
+
+# 依赖
+node_modules/
+
+# 日志
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 环境变量
+.env
+.env.*
+!.env.example
+
+# 系统文件
+.DS_Store
+*.pem
+
+# 调试信息
+.vercel
+.turbo
+
+# 自动生成的类型文件
+*.d.ts
+
+# 多媒体和静态资源
+public/
+*.svg
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.webp
+
+# 特殊配置文件
+tsconfig.json
+package.json
+package-lock.json
+pnpm-lock.yaml 
