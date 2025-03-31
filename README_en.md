@@ -160,20 +160,18 @@ Thanks to everyone who supports the open-source community. We sincerely thank ea
 </p>
 
 ### Detailed Statistics
+| Language | Files | Code Lines | Comment Lines | Blank Lines | Percentage |
+|:--------:|:-----:|:----------:|:-------------:|:-----------:|:----------:|
+| TypeScript | 79 | 4920 | 568 | 585 | 91.5% |
+| JavaScript | 3 | 76 | 65 | 21 | 1.4% |
+| CSS | 2 | 125 | 12 | 11 | 2.3% |
+| Config Files | 3 | 231 | 1 | 8 | 4.3% |
+| Markdown | 0 | 0 | 0 | 0 | 0.0% |
+| Others | 1 | 24 | 11 | 9 | 0.4% |
+| **Total** | **88** | **5376** | **657** | **634** | **100%** |
 
-|   Language   | Files  | Code Lines | Comment Lines | Blank Lines | Percentage |
-| :----------: | :----: | :--------: | :-----------: | :---------: | :--------: |
-|  TypeScript  |   55   |    4723    |      141      |     466     |   88.8%    |
-|  JavaScript  |   3    |     55     |      11       |     12      |    1.0%    |
-|     CSS      |   1    |    289     |      12       |     44      |    5.4%    |
-| Config Files |   3    |    226     |       1       |      8      |    4.2%    |
-|   Markdown   |   0    |     0      |       0       |      0      |    0.0%    |
-|    Others    |   2    |     25     |      11       |      9      |    0.5%    |
-|  **Total**   | **64** |  **5318**  |    **176**    |   **539**   |  **100%**  |
-
-_Note: Statistics are automatically updated by GitHub Actions, last updated on 2025-03-31_
-_Excludes node_modules, .next, public directories and package-lock.json, pnpm-lock.yaml, components.json, LICENSE, .gitignore, .dockerignore, README.md, README_en.md files_
-
+*Note: Statistics are automatically updated by GitHub Actions, last updated on 2025-03-31*
+*Excluded node_modules, .next, public directories and package-lock.json, pnpm-lock.yaml, components.json, LICENSE, .gitignore, .dockerignore, README.md, README_en.md files*
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
