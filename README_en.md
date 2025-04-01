@@ -173,13 +173,13 @@ Thanks to everyone who supports the open-source community. We sincerely thank ea
 ### Detailed Statistics
 | Language | Files | Code Lines | Comment Lines | Blank Lines | Percentage |
 |:--------:|:-----:|:----------:|:-------------:|:-----------:|:----------:|
-| TypeScript | 88 | 5691 | 633 | 673 | 92.6% |
+| TypeScript | 88 | 5749 | 653 | 669 | 92.7% |
 | JavaScript | 3 | 76 | 65 | 21 | 1.2% |
 | CSS | 2 | 123 | 12 | 11 | 2.0% |
-| Config Files | 3 | 231 | 1 | 8 | 3.8% |
+| Config Files | 3 | 231 | 1 | 8 | 3.7% |
 | Markdown | 0 | 0 | 0 | 0 | 0.0% |
 | Others | 1 | 24 | 11 | 9 | 0.4% |
-| **Total** | **97** | **6145** | **722** | **722** | **100%** |
+| **Total** | **97** | **6203** | **742** | **718** | **100%** |
 
 *Note: Statistics are automatically updated by GitHub Actions, last updated on 2025-04-01*
 *Excluded node_modules, .next, public directories and package-lock.json, pnpm-lock.yaml, components.json, LICENSE, .gitignore, .dockerignore, README.md, README_en.md files*
