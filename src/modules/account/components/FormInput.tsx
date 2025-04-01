@@ -13,22 +13,22 @@ import { Control } from 'react-hook-form'
 
 interface FormInputProps {
   control: Control<any>
-  name: string
-  label: string
-  type?: string
-  placeholder?: string
   icon: LucideIcon
+  label: string
+  name: string
   optional?: boolean
+  placeholder?: string
+  type?: string
 }
 
 export function FormInput({
   control,
-  name,
-  label,
-  type = 'text',
-  placeholder,
   icon: Icon,
-  optional = false
+  label,
+  name,
+  optional = false,
+  placeholder,
+  type = 'text'
 }: FormInputProps) {
   return (
     <FormField
@@ -48,9 +48,9 @@ export function FormInput({
             <div className='relative'>
               <Icon className='absolute left-2 sm:left-3 top-1/2 h-3 w-3 sm:h-4 sm:w-4 -translate-y-1/2 text-muted-foreground/70' />
               <Input
-                type={type}
-                placeholder={placeholder || `请输入${label}`}
                 className='pl-7 sm:pl-10 text-sm sm:text-base h-9 sm:h-11 placeholder:text-muted-foreground/60 placeholder:text-xs sm:placeholder:text-sm'
+                placeholder={placeholder || `请输入${label}`}
+                type={type}
                 {...field}
               />
             </div>

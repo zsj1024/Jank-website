@@ -1,49 +1,54 @@
 'use client'
 
+import { fetchVerificationCode } from '@/modules/verification/services/verification'
 import { Button } from '@/shared/components/ui/shadcn/button'
 import { Form } from '@/shared/components/ui/shadcn/form'
-import {
-  registerSchema,
-  type RegisterFormValues
-} from '../validators/form-validators'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Lock, Mail, User } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Mail, Lock, User } from 'lucide-react'
-import {
-  fetchVerificationCode,
-  sendVerificationCode
-} from '@/modules/verification/services/verification'
-import { useState, useCallback, useEffect } from 'react'
-import { FormInput } from './FormInput'
+import { toast } from 'sonner'
+
 import { VerificationCodeInput } from '../../verification/components/VerificationCodeInput'
+import { useAuth } from '../hooks/useAuth'
+import {
+  type RegisterFormValues,
+  registerValidator
+} from '../validators/form-validators'
+import { FormInput } from './FormInput'
 
 interface RegisterFormProps {
-  onSubmit: (data: RegisterFormValues) => Promise<void>
   onSwitchToLogin: () => void
 }
 
-export function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterFormProps) {
+export function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
+  const { handleRegister, isLoading } = useAuth()
   const [imgVerificationCode, setImgVerificationCode] = useState('')
   const [verificationCooldown, setVerificationCooldown] = useState(0)
-  const [countdown, setCountdown] = useState(0)
-  const [emailCodeSending, setEmailCodeSending] = useState(false)
 
   const form = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
     defaultValues: {
-      email: '',
-      password: '',
       again_password: '',
-      nickname: '',
+      email: '',
       email_verification_code: '',
-      img_verification_code: ''
-    }
+      img_verification_code: '',
+      nickname: '',
+      password: ''
+    },
+    resolver: zodResolver(registerValidator)
   })
 
   // 获取图形验证码
   const fetchImgVerificationCode = useCallback(
     async (email: string) => {
-      if (!email || verificationCooldown > 0) return
+      if (verificationCooldown > 0) return
+
+      // 验证邮箱
+      const emailError = await form.trigger('email')
+      if (!emailError) {
+        toast.error('请输入正确的邮箱地址')
+        return
+      }
 
       try {
         const response = await fetchVerificationCode(email)
@@ -51,29 +56,10 @@ export function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterFormProps) {
         setVerificationCooldown(3)
       } catch (error) {
         console.error('获取图形验证码失败', error)
+        toast.error('获取验证码失败，请重试')
       }
     },
-    [verificationCooldown]
-  )
-
-  // 发送邮箱验证码
-  const handleSendEmailCode = useCallback(
-    async (email: string) => {
-      if (!email || emailCodeSending || countdown > 0) return
-
-      setEmailCodeSending(true)
-      try {
-        await sendVerificationCode(email)
-        setCountdown(60)
-        alert('验证码已发送，请查收邮箱')
-      } catch (error) {
-        console.error('发送邮箱验证码失败', error)
-        alert('发送验证码失败，请稍后重试')
-      } finally {
-        setEmailCodeSending(false)
-      }
-    },
-    [emailCodeSending, countdown]
+    [verificationCooldown, form]
   )
 
   // 倒计时处理
@@ -85,78 +71,85 @@ export function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterFormProps) {
     return () => clearTimeout(timer)
   }, [verificationCooldown])
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout
-    if (countdown > 0) {
-      timer = setTimeout(() => setCountdown(prev => prev - 1), 1000)
+  // 发送邮箱验证码
+  const handleSendEmailCode = useCallback(async () => {
+    // 验证邮箱
+    const emailError = await form.trigger('email')
+    if (!emailError) {
+      toast.error('请输入正确的邮箱地址')
+      return
     }
-    return () => clearTimeout(timer)
-  }, [countdown])
+
+    try {
+      toast.success('验证码已发送，请查收邮件')
+    } catch (error) {
+      console.error('发送验证码失败', error)
+      toast.error('发送验证码失败，请重试')
+    }
+  }, [form])
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+      <form className='space-y-4' onSubmit={form.handleSubmit(handleRegister)}>
         <div className='grid gap-4'>
           <FormInput
             control={form.control}
-            name='nickname'
-            label='昵称'
-            icon={User}
-          />
-          <FormInput
-            control={form.control}
-            name='email'
-            label='邮箱'
             icon={Mail}
+            label='邮箱'
+            name='email'
           />
           <FormInput
             control={form.control}
-            name='password'
+            icon={User}
+            label='昵称'
+            name='nickname'
+          />
+          <FormInput
+            control={form.control}
+            icon={Lock}
             label='密码'
+            name='password'
             type='password'
-            icon={Lock}
           />
           <FormInput
             control={form.control}
-            name='again_password'
-            label='确认密码'
-            type='password'
             icon={Lock}
+            label='确认密码'
+            name='again_password'
+            type='password'
           />
           <VerificationCodeInput
             control={form.control}
-            name='img_verification_code'
-            label='图形验证码'
-            type='image'
-            imgCode={imgVerificationCode}
+            label='邮箱验证码'
+            name='email_verification_code'
+            onSendCode={handleSendEmailCode}
+            type='email'
+          />
+          <VerificationCodeInput
+            control={form.control}
             cooldown={verificationCooldown}
+            imgCode={imgVerificationCode}
+            label='图形验证码'
+            name='img_verification_code'
             onFetchCode={() => {
               const email = form.getValues('email')
-              if (email) fetchImgVerificationCode(email)
+              fetchImgVerificationCode(email)
             }}
-          />
-          <VerificationCodeInput
-            control={form.control}
-            name='email_verification_code'
-            label='邮箱验证码'
-            type='email'
-            countdown={countdown}
-            isSending={emailCodeSending}
-            onSendCode={() => handleSendEmailCode(form.getValues('email'))}
+            type='image'
           />
         </div>
 
-        <Button type='submit' className='w-full'>
-          注册
+        <Button className='w-full' disabled={isLoading} type='submit'>
+          {isLoading ? '注册中...' : '注册'}
         </Button>
 
         <div className='mt-4 text-center text-sm text-muted-foreground'>
           已有账号？{' '}
           <Button
-            type='button'
-            variant='link'
             className='h-auto p-0 text-sm font-medium'
             onClick={onSwitchToLogin}
+            type='button'
+            variant='link'
           >
             立即登录
           </Button>

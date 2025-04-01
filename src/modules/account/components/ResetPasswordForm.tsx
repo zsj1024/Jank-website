@@ -1,18 +1,19 @@
 'use client'
 
+import { sendVerificationCode } from '@/modules/verification/services/verification'
 import { Button } from '@/shared/components/ui/shadcn/button'
 import { Form } from '@/shared/components/ui/shadcn/form'
-import {
-  resetPasswordSchema,
-  type ResetPasswordFormValues
-} from '../validators/form-validators'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Lock, Mail } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Mail, Lock } from 'lucide-react'
-import { sendVerificationCode } from '@/modules/verification/services/verification'
-import { useState, useCallback, useEffect } from 'react'
-import { FormInput } from './FormInput'
+
 import { VerificationCodeInput } from '../../verification/components/VerificationCodeInput'
+import {
+  type ResetPasswordFormValues,
+  resetPasswordValidator
+} from '../validators/form-validators'
+import { FormInput } from './FormInput'
 
 interface ResetPasswordFormProps {
   onSubmit: (data: ResetPasswordFormValues) => Promise<void>
@@ -27,13 +28,13 @@ export function ResetPasswordForm({
   const [emailCodeSending, setEmailCodeSending] = useState(false)
 
   const form = useForm<ResetPasswordFormValues>({
-    resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: '',
-      new_password: '',
       again_new_password: '',
-      email_verification_code: ''
-    }
+      email: '',
+      email_verification_code: '',
+      new_password: ''
+    },
+    resolver: zodResolver(resetPasswordValidator)
   })
 
   // 发送邮箱验证码
@@ -67,50 +68,50 @@ export function ResetPasswordForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+      <form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
         <div className='grid gap-4'>
           <FormInput
             control={form.control}
-            name='email'
-            label='邮箱'
             icon={Mail}
+            label='邮箱'
+            name='email'
           />
           <FormInput
             control={form.control}
-            name='new_password'
+            icon={Lock}
             label='新密码'
+            name='new_password'
             type='password'
-            icon={Lock}
           />
           <FormInput
             control={form.control}
-            name='again_new_password'
-            label='确认新密码'
-            type='password'
             icon={Lock}
+            label='确认新密码'
+            name='again_new_password'
+            type='password'
           />
           <VerificationCodeInput
             control={form.control}
-            name='email_verification_code'
-            label='邮箱验证码'
-            type='email'
             countdown={countdown}
             isSending={emailCodeSending}
+            label='邮箱验证码'
+            name='email_verification_code'
             onSendCode={() => handleSendEmailCode(form.getValues('email'))}
+            type='email'
           />
         </div>
 
-        <Button type='submit' className='w-full'>
+        <Button className='w-full' type='submit'>
           重置密码
         </Button>
 
         <div className='mt-4 text-center text-sm text-muted-foreground'>
           记起密码了？{' '}
           <Button
-            type='button'
-            variant='link'
             className='h-auto p-0 text-sm font-medium'
             onClick={onSwitchToLogin}
+            type='button'
+            variant='link'
           >
             立即登录
           </Button>

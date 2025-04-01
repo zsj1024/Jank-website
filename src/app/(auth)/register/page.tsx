@@ -1,5 +1,6 @@
 'use client'
 
+import { RegisterForm } from '@/modules/account/components/RegisterForm'
 import {
   Card,
   CardContent,
@@ -7,12 +8,9 @@ import {
   CardHeader,
   CardTitle
 } from '@/shared/components/ui/shadcn/card'
-import { RegisterForm } from '@/modules/account/components/RegisterForm'
-import { useAuth } from '@/modules/account/hooks/useAuth'
 import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
-  const { handleRegister } = useAuth()
   const router = useRouter()
 
   return (
@@ -26,10 +24,7 @@ export default function RegisterPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <RegisterForm
-              onSubmit={handleRegister}
-              onSwitchToLogin={() => router.push('/login')}
-            />
+            <RegisterForm onSwitchToLogin={() => router.push('/login')} />
           </CardContent>
         </Card>
       </div>

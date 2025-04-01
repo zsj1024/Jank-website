@@ -1,41 +1,51 @@
 'use client'
 
+import { fetchVerificationCode } from '@/modules/verification/services/verification'
 import { Button } from '@/shared/components/ui/shadcn/button'
 import { Form } from '@/shared/components/ui/shadcn/form'
-import {
-  loginSchema,
-  type LoginFormValues
-} from '../validators/form-validators'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Lock, Mail } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Mail, Lock } from 'lucide-react'
-import { fetchVerificationCode } from '@/modules/verification/services/verification'
-import { useState, useCallback, useEffect } from 'react'
-import { FormInput } from './FormInput'
+import { toast } from 'sonner'
+
 import { VerificationCodeInput } from '../../verification/components/VerificationCodeInput'
+import { useAuth } from '../hooks/useAuth'
+import {
+  type LoginFormValues,
+  loginValidator
+} from '../validators/form-validators'
+import { FormInput } from './FormInput'
 
 interface LoginFormProps {
-  onSubmit: (data: LoginFormValues) => Promise<void>
   onSwitchToRegister: () => void
 }
 
-export function LoginForm({ onSubmit, onSwitchToRegister }: LoginFormProps) {
+export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
+  const { handleLogin, isLoading } = useAuth()
   const [imgVerificationCode, setImgVerificationCode] = useState('')
   const [verificationCooldown, setVerificationCooldown] = useState(0)
 
   const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
-      password: '',
-      img_verification_code: ''
-    }
+      img_verification_code: '',
+      password: ''
+    },
+    resolver: zodResolver(loginValidator)
   })
 
   // 获取图形验证码
   const fetchImgVerificationCode = useCallback(
     async (email: string) => {
-      if (!email || verificationCooldown > 0) return
+      if (verificationCooldown > 0) return
+
+      // 验证邮箱
+      const emailError = await form.trigger('email')
+      if (!emailError) {
+        toast.error('请输入正确的邮箱地址')
+        return
+      }
 
       try {
         const response = await fetchVerificationCode(email)
@@ -43,9 +53,10 @@ export function LoginForm({ onSubmit, onSwitchToRegister }: LoginFormProps) {
         setVerificationCooldown(3)
       } catch (error) {
         console.error('获取图形验证码失败', error)
+        toast.error('获取验证码失败，请重试')
       }
     },
-    [verificationCooldown]
+    [verificationCooldown, form]
   )
 
   // 倒计时处理
@@ -59,46 +70,46 @@ export function LoginForm({ onSubmit, onSwitchToRegister }: LoginFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+      <form className='space-y-4' onSubmit={form.handleSubmit(handleLogin)}>
         <div className='grid gap-4'>
           <FormInput
             control={form.control}
-            name='email'
-            label='邮箱'
             icon={Mail}
+            label='邮箱'
+            name='email'
           />
           <FormInput
             control={form.control}
-            name='password'
-            label='密码'
-            type='password'
             icon={Lock}
+            label='密码'
+            name='password'
+            type='password'
           />
           <VerificationCodeInput
             control={form.control}
-            name='img_verification_code'
-            label='图形验证码'
-            type='image'
-            imgCode={imgVerificationCode}
             cooldown={verificationCooldown}
+            imgCode={imgVerificationCode}
+            label='图形验证码'
+            name='img_verification_code'
             onFetchCode={() => {
               const email = form.getValues('email')
-              if (email) fetchImgVerificationCode(email)
+              fetchImgVerificationCode(email)
             }}
+            type='image'
           />
         </div>
 
-        <Button type='submit' className='w-full'>
-          登录
+        <Button className='w-full' disabled={isLoading} type='submit'>
+          {isLoading ? '登录中...' : '登录'}
         </Button>
 
         <div className='mt-4 text-center text-sm text-muted-foreground'>
           没有账号？{' '}
           <Button
-            type='button'
-            variant='link'
             className='h-auto p-0 text-sm font-medium'
             onClick={onSwitchToRegister}
+            type='button'
+            variant='link'
           >
             立即注册
           </Button>

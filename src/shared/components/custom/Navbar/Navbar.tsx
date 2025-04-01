@@ -12,11 +12,11 @@ import { frontendNavigation } from '@/shared/config/navigation.config'
 import { siteConfig } from '@/shared/config/site.config'
 import { ThemeToggle } from '@/shared/lib/theme'
 import { cn } from '@/shared/lib/utils'
+import { Menu, User } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Menu, User } from 'lucide-react'
 
 interface NavbarProps {
   className?: string

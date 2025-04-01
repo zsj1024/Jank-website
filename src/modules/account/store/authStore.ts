@@ -2,6 +2,7 @@
 
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+
 import { GetAccount } from '../types/Account'
 
 /**
@@ -14,20 +15,16 @@ export type UserInfo = GetAccount
  */
 interface AuthStoreState {
   // 状态属性
-  accessToken: string | null
-  refreshToken: string | null
-  userInfo: UserInfo | null
+  accessToken: null | string
   isAuthenticated: boolean
-
   // 操作方法
-  login: (
-    accessToken: string,
-    refreshToken: string,
-    userInfo: UserInfo
-  ) => void
+  login: (accessToken: string, refreshToken: string, userInfo: UserInfo) => void
   logout: () => void
-  updateUserInfo: (userInfo: Partial<UserInfo>) => void
+
+  refreshToken: null | string
   updateTokens: (accessToken: string, refreshToken: string) => void
+  updateUserInfo: (userInfo: Partial<UserInfo>) => void
+  userInfo: null | UserInfo
 }
 
 /**
@@ -37,37 +34,37 @@ interface AuthStoreState {
  */
 export const useAuthStore = create<AuthStoreState>()(
   persist(
-    (set) => ({
+    set => ({
       accessToken: null,
-      refreshToken: null,
-      userInfo: null,
       isAuthenticated: false,
-
       login: (accessToken, refreshToken, userInfo) =>
         set({
           accessToken,
+          isAuthenticated: true,
           refreshToken,
-          userInfo,
-          isAuthenticated: true
+          userInfo
         }),
-
       logout: () =>
         set({
           accessToken: null,
+          isAuthenticated: false,
           refreshToken: null,
-          userInfo: null,
-          isAuthenticated: false
+          userInfo: null
         }),
 
-      updateUserInfo: (partialUserInfo) =>
-        set((state) => ({
+      refreshToken: null,
+
+      updateTokens: (accessToken, refreshToken) =>
+        set({ accessToken, refreshToken }),
+
+      updateUserInfo: partialUserInfo =>
+        set(state => ({
           userInfo: state.userInfo
             ? { ...state.userInfo, ...partialUserInfo }
             : null
         })),
 
-      updateTokens: (accessToken, refreshToken) =>
-        set({ accessToken, refreshToken }),
+      userInfo: null
     }),
     {
       name: 'auth-storage'

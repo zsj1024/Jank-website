@@ -1,9 +1,9 @@
 'use client'
 
-import { Button } from '@/shared/components/ui/shadcn/button'
-import { Badge } from "@shared/components/ui/shadcn/badge"
 import { Card, CardContent } from '@/shared/components/ui/shadcn//card'
+import { Button } from '@/shared/components/ui/shadcn/button'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
+import { Badge } from '@shared/components/ui/shadcn/badge'
 import {
   ArrowRight,
   ChevronRight,
@@ -78,9 +78,7 @@ const SectionTitle = memo(function SectionTitle({
 }) {
   return (
     <div className='text-center max-w-3xl mx-auto mb-10 sm:mb-16'>
-      <Badge variant="outline">
-        {badge}
-      </Badge>
+      <Badge variant='outline'>{badge}</Badge>
       <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4'>
         {title}
       </h2>
