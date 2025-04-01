@@ -56,36 +56,47 @@ Jank is a lightweight blog system developed with Go language and Echo framework.
 
 ```bash
 src/
-├── app/                    # Next.js App Router
-│   ├── (frontend)/         # Frontend page routes
-│   │   ├── page.tsx        # Home page
-│   │   └── posts/          # Article pages
-│   └── console/            # Admin panel routes
-├── components/             # Components directory
-│   ├── custom/             # Custom components
-│   ├── layout/             # Layout components
-│   └── ui/                 # UI components
-│       └── shadcn/         # Shadcn UI components
-├── config/                 # Global configurations
-│   ├── site.config.ts      # Site configuration
-│   ├── seo.config.ts       # SEO configuration
-│   └── navigation.config.ts # Navigation configuration
-├── lib/                    # Function modules
-│   ├── animations/         # Animation system
-│   ├── axios/              # HTTP client
-│   ├── seo/                # SEO tools
-│   ├── theme/              # Theme system
-│   └── utils/              # Utility tools
-├── services/               # Service layer
-│   └── api/                # API services
-│       ├── account.ts      # Account-related APIs
-│       ├── post.ts         # Post-related APIs
-│       └── category.ts     # Category-related APIs
-├── store/                  # State management
-│   └── auth.ts             # Authentication state
-├── styles/                 # Style files
-├── providers/              # Global providers
-└── types/                  # TypeScript type definitions
+├── app/                        # Next.js App Router
+│   ├── (portal)/               # Frontend route group (public pages)
+│   ├── (dashboard)/            # Backend route group (admin system)
+│   ├── (auth)/                 # Authentication route group (login/register)
+│   └── layout.tsx              # Global layout
+│
+├── modules/                    # Business modules (domain-driven)
+│   ├── account/                # Account module
+│   │   ├── api/                # API requests
+│   │   ├── services/           # Business logic services
+│   │   ├── actions/            # Server action functions
+│   │   ├── components/         # Module-specific components
+│   │   ├── hooks/              # Custom hooks
+│   │   └── types/              # Type definitions
+│   │
+│   ├── category/               # Category module
+│   ├── post/                   # Post module
+│   └── verification/           # Verification module
+│
+├── shared/                     # Shared resources
+│   ├── components/             # Shared components
+│   │   ├── custom/             # Custom business components
+│   │   ├── layout/             # Layout components
+│   │   └── ui/                 # UI base components
+│   │
+│   ├── config/                 # Global configuration
+│   ├── hooks/                  # Shared hooks
+│   ├── lib/                    # Function libraries
+│   │   ├── animations/         # Animation library
+│   │   ├── api/                # API client
+│   │   ├── seo/                # SEO-related
+│   │   ├── theme/              # Theme-related
+│   │   └── utils/              # Utility functions
+│   │
+│   ├── providers/              # Global context providers
+│   ├── store/                  # Global state
+│   ├── styles/                 # Global styles
+│   └── types/                  # Shared types
+│
+└── public/                     # Static resources
+    └── images/                 # Image resources
 ```
 
 ## Local Development
@@ -160,18 +171,20 @@ Thanks to everyone who supports the open-source community. We sincerely thank ea
 </p>
 
 ### Detailed Statistics
-| Language | Files | Code Lines | Comment Lines | Blank Lines | Percentage |
-|:--------:|:-----:|:----------:|:-------------:|:-----------:|:----------:|
-| TypeScript | 79 | 4920 | 568 | 585 | 91.5% |
-| JavaScript | 3 | 76 | 65 | 21 | 1.4% |
-| CSS | 2 | 125 | 12 | 11 | 2.3% |
-| Config Files | 3 | 231 | 1 | 8 | 4.3% |
-| Markdown | 0 | 0 | 0 | 0 | 0.0% |
-| Others | 1 | 24 | 11 | 9 | 0.4% |
-| **Total** | **88** | **5376** | **657** | **634** | **100%** |
 
-*Note: Statistics are automatically updated by GitHub Actions, last updated on 2025-03-31*
-*Excluded node_modules, .next, public directories and package-lock.json, pnpm-lock.yaml, components.json, LICENSE, .gitignore, .dockerignore, README.md, README_en.md files*
+|   Language   | Files  | Code Lines | Comment Lines | Blank Lines | Percentage |
+| :----------: | :----: | :--------: | :-----------: | :---------: | :--------: |
+|  TypeScript  |   79   |    4920    |      568      |     585     |   91.5%    |
+|  JavaScript  |   3    |     76     |      65       |     21      |    1.4%    |
+|     CSS      |   2    |    125     |      12       |     11      |    2.3%    |
+| Config Files |   3    |    231     |       1       |      8      |    4.3%    |
+|   Markdown   |   0    |     0      |       0       |      0      |    0.0%    |
+|    Others    |   1    |     24     |      11       |      9      |    0.4%    |
+|  **Total**   | **88** |  **5376**  |    **657**    |   **634**   |  **100%**  |
+
+_Note: Statistics are automatically updated by GitHub Actions, last updated on 2025-03-31_
+_Excluded node_modules, .next, public directories and package-lock.json, pnpm-lock.yaml, components.json, LICENSE, .gitignore, .dockerignore, README.md, README_en.md files_
+
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).

@@ -1,8 +1,8 @@
-import { MainFooter } from '@/components/layout/Footer'
-import { OptimizedResources } from '@/lib/seo'
-import { cn } from '@/lib/utils'
-import { Providers } from '@/providers'
-import '@/styles/globals.css'
+import { MainFooter } from '@/shared/components/layout/Footer'
+import { OptimizedResources } from '@/shared/lib/seo'
+import { cn } from '@/shared/lib/utils'
+import { Providers } from '@/shared/providers'
+import '@/shared/styles/globals.css'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
