@@ -1,6 +1,5 @@
 'use client'
 
-import { Icons } from '@/shared/components/ui/Icons'
 import { Button } from '@/shared/components/ui/shadcn/button'
 import {
   Sheet,
@@ -17,6 +16,7 @@ import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { Menu, User } from 'lucide-react'
 
 interface NavbarProps {
   className?: string
@@ -47,7 +47,7 @@ export const MobileNav = () => {
     <Sheet onOpenChange={setOpen} open={open}>
       <SheetTrigger asChild>
         <Button className={iconButtonStyles} size='icon' variant='ghost'>
-          <Icons.menu className={iconStyles} />
+          <Menu className={iconStyles} />
           <span className='sr-only'>打开菜单</span>
         </Button>
       </SheetTrigger>
@@ -160,7 +160,7 @@ export const Navbar = ({ className }: NavbarProps) => {
                   size='icon'
                   variant='ghost'
                 >
-                  <Icons.user className={iconStyles} />
+                  <User className={iconStyles} />
                   <span className='sr-only'>登录</span>
                 </Button>
               </Link>

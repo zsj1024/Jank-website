@@ -1,12 +1,12 @@
 'use client'
 
 import { Button, Card, CardContent } from '@/shared/components/ui/shadcn'
+import { GitHubLogoIcon } from '@radix-ui/react-icons'
 import {
   ArrowRight,
   ChevronRight,
   Code,
   Database,
-  Github,
   Globe,
   Shield
 } from 'lucide-react'
@@ -202,7 +202,7 @@ export default function Home() {
                     size='lg'
                     variant='outline'
                   >
-                    <Github className='mr-1 sm:mr-2 h-4 sm:h-5 w-4 sm:w-5' />
+                    <GitHubLogoIcon className='mr-1 sm:mr-2 h-4 sm:h-5 w-4 sm:w-5' />
                     {CONTENT.hero.buttons.github}
                   </Button>
                 </div>
