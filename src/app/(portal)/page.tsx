@@ -1,6 +1,8 @@
 'use client'
 
-import { Button, Card, CardContent } from '@/shared/components/ui/shadcn'
+import { Button } from '@/shared/components/ui/shadcn/button'
+import { Badge } from "@shared/components/ui/shadcn/badge"
+import { Card, CardContent } from '@/shared/components/ui/shadcn//card'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 import {
   ArrowRight,
@@ -76,9 +78,9 @@ const SectionTitle = memo(function SectionTitle({
 }) {
   return (
     <div className='text-center max-w-3xl mx-auto mb-10 sm:mb-16'>
-      <div className='inline-block px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3 sm:mb-4'>
+      <Badge variant="outline">
         {badge}
-      </div>
+      </Badge>
       <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4'>
         {title}
       </h2>

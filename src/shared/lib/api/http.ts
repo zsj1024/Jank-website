@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/shared/store/auth'
+import { useAuthStore } from '@/modules/account/store/authStore'
 
 /**
  * 请求配置接口

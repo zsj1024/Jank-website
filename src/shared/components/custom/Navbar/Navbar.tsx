@@ -73,7 +73,7 @@ export const MobileNav = () => {
           <div className='flex flex-col gap-2 border-b border-border/5 pb-4'>
             <Link
               className={`flex items-center py-2 text-base ${linkBaseStyles} ${linkInactiveStyles}`}
-              href='/auth/login'
+              href='/login'
               onClick={() => setOpen(false)}
             >
               登录
@@ -154,7 +154,7 @@ export const Navbar = ({ className }: NavbarProps) => {
           <div className='flex items-center gap-4'>
             <div className='hidden md:flex items-center gap-4'>
               <ThemeToggle className={iconButtonStyles} />
-              <Link href='/auth/login'>
+              <Link href='/login'>
                 <Button
                   className={iconButtonStyles}
                   size='icon'

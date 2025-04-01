@@ -1,11 +1,11 @@
 import { Navbar } from '@/shared/components/custom/Navbar'
 import { ReactNode } from 'react'
 
-interface PortalLayoutProps {
+interface AuthLayoutProps {
   children: ReactNode
 }
 
-export default function PortalLayout({ children }: PortalLayoutProps) {
+export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <>
       <Navbar />

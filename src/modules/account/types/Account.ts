@@ -1,5 +1,5 @@
 /** 获取账户数据 */
-declare interface GetAccount {
+export interface GetAccount {
     avatar: string
     email: string
     nickname: string
@@ -7,7 +7,7 @@ declare interface GetAccount {
 }
 
 /** 登陆账号响应 */
-declare interface LoginAccountResponse {
+export interface LoginAccountResponse {
     data: {
         access_token: string
         refresh_token: string
@@ -17,14 +17,14 @@ declare interface LoginAccountResponse {
 }
 
 /** 登录表单数据 */
-declare interface LoginFormData {
+export interface LoginFormData {
     email: string
     img_verification_code: string
     password: string
 }
 
 /** 注册账号响应 */
-declare interface RegisterAccountResponse {
+export interface RegisterAccountResponse {
     data: {
         email: string
         nickname: string
@@ -34,7 +34,7 @@ declare interface RegisterAccountResponse {
 }
 
 /** 注册表单数据 */
-declare interface RegisterFormData {
+export interface RegisterFormData {
     email: string
     email_verification_code: string
     img_verification_code: string
